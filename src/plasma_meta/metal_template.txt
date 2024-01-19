@@ -1,0 +1,24 @@
+# METAL script for EUR meta-analysis
+
+COLUMNCOUNTING STRICT # make sure all rows have the same number of columns
+SCHEME STDERR # use an inverse-variance weighted meta-analysis
+AVERAGEFREQ ON
+MINMAXFREQ ON
+
+# === DESCRIBE AND PROCESS THE INPUT FILE ===
+MARKER cpid
+ALLELE effect_allele other_allele
+EFFECT effect
+PVALUE P
+STDERR SE
+FREQLABEL MAF
+
+# === LOAD FILES ===
+PROCESS METSIM_SUMSTATS
+PROCESS SCHLOSSER_SUMSTATS
+
+# === ANALYSE AND OUTPUT ===
+OUTFILE META_RESULT .tbl
+ANALYZE HETEROGENEITY # includes het-P, Q, and I2 in output file
+
+QUIT
