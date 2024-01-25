@@ -17,13 +17,20 @@ res_list = map_dfr(list(res_full, res_male, res_female), ~ .x)
 
 # Add loci information - currently looking only at EUR loci/SNPs
 loci = read.table('data/gwas//COMBINED_loci_summary_updated_9Dec2022_withLD_withBroad.txt', sep = '\t', header = T, stringsAsFactors = F)
-loci = loci %>% filter(EUR.full != '') %>% select(locus.full, EUR.full, EUR.male, EUR.female)
-loci = loci %>% pivot_longer(cols = c('EUR.full', 'EUR.male', 'EUR.female'), names_to = 'cohort', values_to = 'SNP')
-loci = loci %>% mutate(cohort = gsub('EUR.', '', cohort)) %>% filter(SNP != '')
-colnames(loci)[1] = 'locus'
-loci$locus = gsub('_[[:alpha:]]', '', loci$locus)
+loci = loci %>% select(locus.full, locus.male, Main_GWAS_loci.male, locus.female, Main_GWAS_loci.female, EUR.full, EUR.male, EUR.female)
 
-res_list = res_list %>% left_join(., loci, by = 'SNP', suffix = c('.coloc', '.locus'), relationship = 'many-to-many') %>% select(locus, contains('cohort'), compound, SNP:PP.H4.abf)
+# Remove male/female variants that have the same locus as the full GWAS (i.e.
+# remove those that are not sex-specific)
+loci$EUR.male = ifelse(loci$locus.full == loci$Main_GWAS_loci.male, '', loci$EUR.male)
+loci$EUR.female = ifelse(loci$locus.full == loci$Main_GWAS_loci.female, '', loci$EUR.female)
+
+# Now pivot the table longer to make a list of variants with info on where the
+# variants came from
+loci = loci %>% pivot_longer(cols = c('EUR.full', 'EUR.male', 'EUR.female'), names_to = 'cohort', values_to = 'SNP')
+loci = loci %>% pivot_longer(cols = c(locus.full:Main_GWAS_loci.female), names_to = 'locus.cohort', values_to = 'locus')
+loci = loci %>% mutate(cohort = gsub('EUR.', '', cohort), locus.cohort = gsub('.*\\.', '', locus.cohort)) %>% filter(SNP != '', locus != '', cohort == locus.cohort, !grepl('Unique', locus)) %>% select(!locus.cohort) %>% distinct
+
+res_list = res_list %>% left_join(., loci, by = 'SNP', suffix = c('.coloc', '.locus'), relationship = 'many-to-many') %>% select(locus, contains('cohort'), compound, SNP:PP.H4.abf) %>% drop_na
 
 # Add compound name:
 compound_info = read.table('data/metsim_data/phenotypes.tsv', sep = '\t', header = T, stringsAsFactors = F, quote = '')
