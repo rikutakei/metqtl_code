@@ -19,14 +19,8 @@ library(fedmatch)
 # setwd('..')
 
 # Load colocalisation results from gout vs metQTL
-dat = read.table('results/coloc_res/metsim/merged_res/coloc_merged.pp0.8.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
-
-# First remove the "Uncharacterized" metabolites
-dat = dat %>% filter(!(category %in% c('Uncharacterized', 'Partially_Characterized')))
-
-# List to use on the MetaboAnalyst website to see if matches are better there
-# writeLines(unique(dat$phenostring[dat$category != 'Lipid']), 'results/coloc_res/metsim/merged_res/metaboanalyst_list.met.txt')
-# writeLines(unique(dat$phenostring[dat$category == 'Lipid']), 'results/coloc_res/metsim/merged_res/metaboanalyst_list.lipid.txt')
+file_list = c('results/coloc_res/schlosser/plasma/merged_res/coloc_merged.pp0.8.plasma.txt', 'results/coloc_res/schlosser/urine/merged_res/coloc_merged.pp0.8.urine.txt')
+dat = map_dfr(file_list, ~ read.table(.x, sep = '\t', header = T, stringsAsFactors = F, quote = ''))
 
 # Need to clean the metabolite name a little
 # - remove "*" character
@@ -151,10 +145,10 @@ res = rbind(res, fuz_match)
 # still be valid (e.g. D-/L-amino acids) - save and check manually
 fuz_check = fuzzy %>% filter(metabolite %in% dup_met) %>% select(metabolite, metabolite.hmdb, synonym_1)
 
-write.table(fuz_check, 'results/hmdb_match/fuzzy_match_check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(fuz_check, 'results/hmdb_match/schlosser/fuzzy_match_check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
 # Read in the metabolites to keep/add to `res`
-fuz_keep = read.table('results/hmdb_match/fuzzy_match_keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+fuz_keep = read.table('results/hmdb_match/schlosser/fuzzy_match_keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
 fuz_keep = inner_join(fuzzy, fuz_keep) %>% select(metabolite, metabolite.hmdb, synonym_1, status_1, status_value_1)
 colnames(fuz_keep) = gsub('_1', '', colnames(fuz_keep))
 
@@ -172,10 +166,10 @@ dup_met = unique(dup_clean$metabolite)
 check = exact %>% filter(metabolite %in% dup_met)
 check = dat %>% distinct(phenostring, metabolite) %>% left_join(., check, relationship = 'many-to-many') %>% filter(!is.na(metabolite.hmdb)) %>% arrange(metabolite)
 
-write.table(check, 'results/hmdb_match/lipid_multi_check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(check, 'results/hmdb_match/schlosser/lipid_multi_check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
 # Read in the metabolites to keep:
-keep = read.table('results/hmdb_match/lipid_multi_keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+keep = read.table('results/hmdb_match/schlosser/lipid_multi_keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
 keep$match.type = 'manual'
 
 # Add phenostring back to `res` and rbind the `keep`
@@ -206,9 +200,9 @@ cand = fuzzy_res$matches %>% filter(metabolite.y %in% no_match$metabolite) %>% a
 colnames(cand)[c(3, 7)] = c('metabolite.hmdb', 'metabolite')
 
 # Write it out and check manually:
-write.table(cand, 'results/hmdb_match/non_match_candidates.check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(cand, 'results/hmdb_match/schlosser/non_match_candidates.check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
-cand_keep = read.table('results/hmdb_match/non_match_candidates.keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+cand_keep = read.table('results/hmdb_match/schlosser/non_match_candidates.keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
 
 cand_keep = dat %>% distinct(phenostring, metabolite) %>% left_join(cand_keep, ., relationship = 'many-to-many') %>% select(phenostring, metabolite, metabolite.hmdb, synonym, status, status_value)
 cand_keep$match.type = 'manual'
@@ -219,12 +213,12 @@ res = rbind(res, cand_keep)
 no_match = sub_dat %>% filter(!(metabolite %in% res$metabolite))
 tmp = unique(no_match$metabolite)
 tmp = tmp[!grepl('x-', tmp)]
-writeLines(tmp, 'results/hmdb_match/no_match_met.txt')
+writeLines(tmp, 'results/hmdb_match/schlosser/no_match_met.txt')
 
 dat = left_join(dat, res, relationship = 'many-to-many')
 
 clean = dat %>% filter(!is.na(match.type))
 
-write.table(dat, 'results/hmdb_match/coloc_results.hmdb_merge.txt', sep = '\t', col.names = T, row.names = F)
-write.table(clean, 'results/hmdb_match/coloc_results.hmdb_merge.match_only.txt', sep = '\t', col.names = T, row.names = F)
+write.table(dat, 'results/hmdb_match/schlosser/coloc_results.hmdb_merge.txt', sep = '\t', col.names = T, row.names = F)
+write.table(clean, 'results/hmdb_match/schlosser/coloc_results.hmdb_merge.match_only.txt', sep = '\t', col.names = T, row.names = F)
 
