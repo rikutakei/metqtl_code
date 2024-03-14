@@ -4,14 +4,34 @@ library(purrr)
 library(tidyr)
 library(fedmatch)
 
+################################################################################
+# Libraries for MetaboAnalystR (ended up not using it, but here for the record)
+
+# library(BiocManager)
+# library(devtools)
+# pkgs = c("impute", "pcaMethods", "globaltest", "GlobalAncova", "Rgraphviz", "preprocessCore", "genefilter", "sva", "limma", "KEGGgraph", "siggenes","BiocParallel", "MSnbase", "multtest", "RBGL", "edgeR", "fgsea", "crmn", "httr", "qs")
+# BiocManager::install(pkgs)
+# devtools::install_github('xia-lab/MetaboAnalystR', build = T, build_vignettes = T, build_manual = T)
+# library(MetaboAnalystR)
+
+################################################################################
+
 # setwd('..')
 
-dat = read.table('results/merged_res/coloc_merged.full.pp0.8.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+# Load colocalisation results from gout vs metQTL
+dat = read.table('results/coloc_res/metsim/merged_res/coloc_merged.pp0.8.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+
+# First remove the "Uncharacterized" metabolites
+dat = dat %>% filter(!(category %in% c('Uncharacterized', 'Partially_Characterized')))
+
+# List to use on the MetaboAnalyst website to see if matches are better there
+# writeLines(unique(dat$phenostring[dat$category != 'Lipid']), 'results/coloc_res/metsim/merged_res/metaboanalyst_list.met.txt')
+# writeLines(unique(dat$phenostring[dat$category == 'Lipid']), 'results/coloc_res/metsim/merged_res/metaboanalyst_list.lipid.txt')
 
 # Need to clean the metabolite name a little
 # - remove "*" character
-# - separate out the secondary name that is in bracket (e.g. "phenyllactate (PLA)")
-# - separate out the alternative metabolite after the slash (e.g. "oleate/vaccenate"), but only for 
+# - remove the secondary name that is in bracket (e.g. "phenyllactate (PLA)")
+# - separate out the alternative metabolite after the slash (e.g. "oleate/vaccenate")
 dat$metabolite = gsub('\\*.*', '', dat$phenostring)
 dat$metabolite = gsub(' \\[.\\]', '', dat$metabolite)
 dat$metabolite = gsub(' \\([^\\)]*\\) *$', '', dat$metabolite)
@@ -21,12 +41,14 @@ dat = dat %>% separate_rows(metabolite, sep = '/') %>% as.data.frame
 # Aconitate has a "[cis or trans]" in the phenostring - separate this into cis-
 # and trans-aconitate
 ind = which(grepl('cis or trans', dat$metabolite))
-tmp = dat[c(ind, ind), ]
-tmp$metabolite[1] = 'cis-aconitate'
-tmp$metabolite[2] = 'trans-aconitate'
 
-dat = dat[-c(ind), ]
-dat = rbind(dat, tmp)
+if (length(ind) > 0) {
+  tmp = dat[c(ind, ind), ]
+  tmp$metabolite[1] = 'cis-aconitate'
+  tmp$metabolite[2] = 'trans-aconitate'
+  dat = dat[-c(ind), ]
+  dat = rbind(dat, tmp)
+}
 
 # Lower case all the metabolites
 dat$metabolite = tolower(dat$metabolite)
@@ -74,7 +96,12 @@ target = dup %>% group_by(metabolite) %>% arrange(status_value) %>% slice(1) %>%
 
 dup_clean = inner_join(dup, target)
 
-dup_met = dup_clean$metabolite[which(duplicated(dup_clean$metabolite))]
+# There can be metabolites with candidate matches that have the same status.
+# These tend to be L-/D- form of the same compound (so only two candidates are
+# present), or a large number of candidates due to being lipids.
+#
+# Filter out those that have more than 2 candidates:
+dup_met = dup_clean %>% group_by(metabolite) %>% summarise(count = n()) %>% filter(count > 2) %>% pull(metabolite)
 good = dup_clean %>% filter(!(metabolite %in% dup_met))
 
 dup_clean = dup_clean %>% filter(metabolite %in% dup_met)
@@ -83,14 +110,19 @@ dup_clean = dup_clean %>% filter(metabolite %in% dup_met)
 # and add it to the good list
 name_match = dup_clean %>% filter(metabolite == metabolite.hmdb)
 
-good$match.type = 'exact_match'
-name_match$match.type = 'exact_match'
+if (nrow(good) > 0) {
+  good$match.type = 'exact_match'
+}
+
+if (nrow(name_match) > 0) {
+  name_match$match.type = 'exact_match'
+}
 
 res = rbind(good, name_match)
 
 dup_clean = dup_clean %>% filter(!(metabolite %in% res$metabolite))
 
-# Now I'm left with the metabolites that doesn't quite match with the HMDB
+# Now I'm left with the metabolites that don't quite match with the HMDB
 # metabolite and also have the same synonyms across multiple metabolites.
 #
 # Try fuzzy matching to reduce the table into candidates that have similar
@@ -188,20 +220,6 @@ no_match = sub_dat %>% filter(!(metabolite %in% res$metabolite))
 tmp = unique(no_match$metabolite)
 tmp = tmp[!grepl('x-', tmp)]
 writeLines(tmp, 'results/hmdb_match/no_match_met.txt')
-
-# There were few obvious metabolites that could be identified through the HMDB
-# website search
-search_res = read.table('results/hmdb_match/no_match_met.search.txt', sep = '\t', header = F, stringsAsFactors = F, quote = '')
-colnames(search_res) = c('metabolite', 'metabolite.hmdb')
-search_res = search_res %>% filter(!is.na(metabolite.hmdb))
-
-search_res = dat %>% distinct(phenostring, metabolite) %>% left_join(search_res, ., relationship = 'many-to-many') %>% select(phenostring, metabolite, metabolite.hmdb)
-search_res$synonym = NA
-search_res$status = NA
-search_res$status_value = NA
-search_res$match.type = 'manual_search'
-
-res = rbind(res, search_res)
 
 dat = left_join(dat, res, relationship = 'many-to-many')
 
