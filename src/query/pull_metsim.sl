@@ -11,14 +11,14 @@
 #SBATCH --error=%x_%A_%a.err
 #SBATCH --array=1-1391
 
-module load R
+module load R/4.2.2-foss-2022b
 
 # Pull out GWAS variants from each METSIM summary stats
 
 FILENAME=$(ls /data/scratch/rtakei/projects/2023/metqtl_project/data/metsim_data/C*.tsv | head -n ${SLURM_ARRAY_TASK_ID} | tail -n 1)
 COMPOUND=$(echo ${FILENAME%%.tsv} | sed 's/.*\///g')
 
-mkdir -p results/metqtl/${COMPOUND}/
+mkdir -p results/metqtl/metsim/${COMPOUND}/
 
 Rscript /data/scratch/rtakei/projects/2023/metqtl_project/src/query/pull_metsim.R ${FILENAME}
 

@@ -27,7 +27,7 @@ pull_region = function(data, variant, out_name) {
 
 compound = gsub('.*/', '', args[1])
 compound = gsub('.tsv', '', compound)
-out_name = gsub('COM', compound, 'results/metqtl/COM/SNP.metqtl.txt')
+out_name = gsub('COM', compound, 'results/metqtl/metsim/COM/SNP.metqtl.txt')
 out_name = map_chr(snp_list, ~ gsub('SNP', .x, out_name))
 
 map2(snp_list, out_name, ~ pull_region(dat, .x, .y))
