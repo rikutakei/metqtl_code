@@ -29,6 +29,18 @@ gwas_names = gsub('.*/', '', gwas_files)
 gwas_names = gsub('.gwas.txt', '', gwas_names)
 names(gwas_list) = gwas_names
 
+# Load in Schlosser study export table to extract the sample size for
+# each metabolite:
+info = read.table('data/schlosser_metqtl/PMID37277652_studies_export.tsv', sep = '\t', header = T, stringsAsFactors = F)
+
+if (tolower(type) == 'plasma') {
+	info = info %>% filter(grepl('^Plasma', reportedTrait)) %>% select(summaryStatistics, discoverySampleAncestry) %>% mutate(compound = gsub('.*/', '', summaryStatistics)) %>% separate(discoverySampleAncestry, sep = ' ', into = c('N', 'Ancestry'), convert = T) %>% select(compound, N)
+} else if (tolower(type) == 'urine') {
+	info = info %>% filter(grepl('^Urine', reportedTrait)) %>% select(summaryStatistics, discoverySampleAncestry) %>% mutate(compound = gsub('.*/', '', summaryStatistics)) %>% separate(discoverySampleAncestry, sep = ' ', into = c('N', 'Ancestry'), convert = T) %>% select(compound, N)
+}
+
+sample_size = info$N[which(info$compound == metabolite)]
+
 # Match up the files and find variants that are common
 # NOTE: there may be duplicated variants/SNPs in metabolite data, so take care
 # of it (I've also done it for GWAS, just in case)
@@ -65,7 +77,7 @@ gwas_list = gwas_list[keep]
 #  - female = 22398 / 1146092 = 0.0195
 #  - male = 72799 / 926287 = 0.0808
 # Defaults to case proportion from full cohort
-run_coloc = function(gwas_dat, met_dat, prop_case = 0.0478) {
+run_coloc = function(gwas_dat, met_dat, prop_case = 0.0478, n) {
 	gwas = list(snp = gwas_dat$SNP,
 				beta = gwas_dat$effect,
 				MAF = gwas_dat$MAF,
@@ -78,7 +90,7 @@ run_coloc = function(gwas_dat, met_dat, prop_case = 0.0478) {
 	met = list(snp = met_dat$SNP,
 			   beta = met_dat$effect,
 			   MAF = met_dat$MAF,
-			   N = 5023,
+			   N = n,
 			   varbeta = (met_dat$SE ^ 2),
 			   pvalues = met_dat$P,
 			   type = 'quant')
@@ -95,7 +107,7 @@ if(cohort == 'full') {
 	prop = 0.0195
 }
 
-coloc_res = map_dfr(names(gwas_list), ~ run_coloc(gwas_list[[.x]], met_list[[.x]], prop_case = prop))
+coloc_res = map_dfr(names(gwas_list), ~ run_coloc(gwas_list[[.x]], met_list[[.x]], prop_case = prop, n = sample_size))
 
 coloc_res$SNP = names(gwas_list)
 coloc_res = coloc_res %>% select(SNP, nsnps:PP.H4.abf)
