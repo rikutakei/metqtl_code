@@ -18,8 +18,10 @@ library(fedmatch)
 
 # setwd('..')
 
-# Load colocalisation results from gout vs metQTL
-dat = read.table('results/coloc_res/metsim/merged_res/coloc_merged.pp0.8.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+# Match ALL the METSIM metabolites with HMDB, so this data can be used to match
+# up with other data set for the category information (e.g. Schlosser data):
+dat = read.table('data/metqtl_pheno/metsim_phenotypes.tsv', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+dat = dat %>% select(phenocode:phenostring)
 
 # First remove the "Uncharacterized" metabolites
 dat = dat %>% filter(!(category %in% c('Uncharacterized', 'Partially_Characterized')))
@@ -188,6 +190,7 @@ non_dup = dat %>% distinct(phenostring, metabolite) %>% left_join(non_dup, ., re
 non_dup$match.type = 'exact_match'
 
 res = rbind(res, non_dup)
+res$phenostring[which(grepl('"', res$phenostring))] = gsub('"', '', res$phenostring[which(grepl('"', res$phenostring))])
 
 ################################################################################
 # Now focus on the metabolites that didn't match exactly with the synonyms (or
@@ -209,6 +212,9 @@ colnames(cand)[c(3, 7)] = c('metabolite.hmdb', 'metabolite')
 write.table(cand, 'results/hmdb_match/metsim/non_match_candidates.check.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
 cand_keep = read.table('results/hmdb_match/metsim/non_match_candidates.keep.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
+cand_keep$metabolite = gsub('"', '', cand_keep$metabolite)
+cand_keep$synonym = gsub('"', '', cand_keep$synonym)
+cand_keep$metabolite.hmdb = gsub('"', '', cand_keep$metabolite.hmdb)
 
 cand_keep = dat %>% distinct(phenostring, metabolite) %>% left_join(cand_keep, ., relationship = 'many-to-many') %>% select(phenostring, metabolite, metabolite.hmdb, synonym, status, status_value)
 cand_keep$match.type = 'manual'
@@ -222,9 +228,10 @@ tmp = tmp[!grepl('x-', tmp)]
 writeLines(tmp, 'results/hmdb_match/metsim/no_match_met.txt')
 
 dat = left_join(dat, res, relationship = 'many-to-many')
+dat$match.type[is.na(dat$match.type)] = 'no_match'
 
-clean = dat %>% filter(!is.na(match.type))
+clean = dat %>% filter(match.type == 'no_match')
 
-write.table(dat, 'results/hmdb_match/metsim/coloc_results.hmdb_merge.txt', sep = '\t', col.names = T, row.names = F)
-write.table(clean, 'results/hmdb_match/metsim/coloc_results.hmdb_merge.match_only.txt', sep = '\t', col.names = T, row.names = F)
+write.table(dat, 'results/hmdb_match/metsim/all_metsim.hmdb_merge.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(clean, 'results/hmdb_match/metsim/all_metsim.hmdb_merge.match_only.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
