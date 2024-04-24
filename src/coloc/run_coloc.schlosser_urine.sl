@@ -6,12 +6,13 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
 #SBATCH --partition=express
-#SBATCH --time=00:15:00
+#SBATCH --time=01:00:00
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
-#SBATCH --array=1-1401
+##SBATCH --array=1-1401
+#SBATCH --array=57,72,73,74,75,78,79,80,81
 
-module load R
+module load R/4.2.0-foss-2022b
 
 # Run coloc for a specific urine metQTL
 

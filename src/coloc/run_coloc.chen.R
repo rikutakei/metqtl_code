@@ -10,11 +10,8 @@ library(coloc)
 
 args = commandArgs(trailingOnly = TRUE)
 
-type = args[3]
-
 metabolite = args[1]
-met_dir = paste('results/metqtl/schlosser/', type, sep = '')
-met_dir = paste(met_dir, metabolite, sep = '/')
+met_dir = paste('results/metqtl/chen/', metabolite, sep = '')
 met_files = list.files(met_dir, pattern = 'metqtl.txt', full.names = T)
 met_list = map(met_files, ~ read.table(.x, sep = '\t', header = T, stringsAsFactors = F))
 met_names = gsub('.*/', '', met_files)
@@ -31,13 +28,8 @@ names(gwas_list) = gwas_names
 
 # Load in Schlosser study export table to extract the sample size for
 # each metabolite:
-info = read.table('data/schlosser_metqtl/PMID37277652_studies_export.tsv', sep = '\t', header = T, stringsAsFactors = F)
-
-if (tolower(type) == 'plasma') {
-	info = info %>% filter(grepl('^Plasma', reportedTrait)) %>% select(summaryStatistics, discoverySampleAncestry) %>% mutate(compound = gsub('.*/', '', summaryStatistics)) %>% separate(discoverySampleAncestry, sep = ' ', into = c('N', 'Ancestry'), convert = T) %>% select(compound, N)
-} else if (tolower(type) == 'urine') {
-	info = info %>% filter(grepl('^Urine', reportedTrait)) %>% select(summaryStatistics, discoverySampleAncestry) %>% mutate(compound = gsub('.*/', '', summaryStatistics)) %>% separate(discoverySampleAncestry, sep = ' ', into = c('N', 'Ancestry'), convert = T) %>% select(compound, N)
-}
+info = read.table('data/chen_metqtl/PMID36635386_studies_export.tsv', sep = '\t', header = T, stringsAsFactors = F)
+info = info %>% select(summaryStatistics, discoverySampleAncestry) %>% filter(grepl('Eur', discoverySampleAncestry)) %>% mutate(compound = gsub('.*/', '', summaryStatistics)) %>% separate(discoverySampleAncestry, sep = ' ', into = c('N', 'Ancestry', 'dummy'), convert = T) %>% select(compound, N)
 
 sample_size = info$N[which(info$compound == metabolite)]
 
@@ -77,6 +69,9 @@ gwas_list = gwas_list[keep]
 #  - female = 22398 / 1146092 = 0.0195
 #  - male = 72799 / 926287 = 0.0808
 # Defaults to case proportion from full cohort
+#
+# In Chen et al., there is information on how many samples were used for each
+# metabolite - load this info from somewhere and add to the data
 run_coloc = function(gwas_dat, met_dat, prop_case = 0.0478, n) {
 	gwas = list(snp = gwas_dat$SNP,
 				beta = gwas_dat$effect,
@@ -113,6 +108,6 @@ coloc_res$SNP = names(gwas_list)
 coloc_res = coloc_res %>% select(SNP, nsnps:PP.H4.abf)
 
 # Save result
-out_name = paste('results/coloc_res/schlosser', type, cohort, metabolite, sep = '/')
+out_name = paste('results/coloc_res/chen', cohort, metabolite, sep = '/')
 out_name = paste(out_name, 'coloc_res', cohort, 'txt', sep = '.')
 write.table(coloc_res, out_name, sep = '\t', col.names = T, row.names = F, quote = F)
