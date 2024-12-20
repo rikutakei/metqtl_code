@@ -7,12 +7,13 @@ library(ggplot2)
 
 setwd('../..')
 
-# Load in list of 144 common plasma metabolites
-met = readLines('results/met_overlap/all_plasma_overlap.txt')
+# Load in list of 141 common plasma metabolites
+met = read.table('results/met_overlap/all_plasma_overlap.txt', sep = '\t', header = T, stringsAsFactors = F)
+met = met$metabolite.common
 
 # Pull out the HMDB names from the coloc results.
 #
-# NOTE: Remember that these 144 metabolites are the cleaned up names of the
+# NOTE: Remember that these 141 metabolites are the cleaned up names of the
 # phenotypes from all three data sets (METSIM, Chen, and Schlosser), and
 # multiple HMDB metabolite names can match to a single phenostring
 metsim = read.table('results/hmdb_match/metsim/coloc_results.hmdb_merge.match_only.txt', sep = '\t', header = T, stringsAsFactors = F)
@@ -28,9 +29,10 @@ master = read.table('results/hmdb_match/master_phenostring.txt', sep = '\t', hea
 dat = left_join(dat, master, by = 'metabolite.hmdb', suffix = c('.original', ''))
 
 # Pull out the target metabolites for lookup
-# (160 HMDB metabolites to look up pathways for)
+# (156 HMDB metabolites to look up pathways for)
 target = dat %>% filter(metabolite %in% met)
 target = target %>% pull(metabolite.hmdb) %>% unique
+length(target)
 
 # TODO: add which gene(s) showed up directly in the colocalised metabolite (e.g. GLS2 with vitamin A (I think))
 #
@@ -51,21 +53,22 @@ met_path = read.table('data/hmdb/hmdb_biopath.txt', sep = '\t', header = T, stri
 met_path = met_path %>% mutate(metabolite = tolower(metabolite))
 
 # Pull out all the pathways that have one of the metabolites in the list
-# (2106 unique pathways involved)
+# (2105 unique pathways involved)
 path_list = met_path %>% filter(metabolite %in% target) %>% pull(name) %>% unique
+length(path_list)
 
 # Now pull out all of the metabolites that are involved in any of the pathways
 # listed above
 full_list = met_path %>% filter(name %in% path_list)
 
-# 6289 metabolites from 2106 pathways
+# 6288 metabolites from 2106 pathways
 length(unique(full_list$metabolite))
 
 # Format the table so that each metabolite has a pathway entry, and then a list
 # of metabolites involved in the listed pathway:
 full_list = full_list %>% select(metabolite, name) %>% left_join(full_list, ., by = 'name', suffix = c('', '.pathway'), relationship = 'many-to-many') %>% distinct
 
-# Exclude metabolites that are "inroganic" (e.g. water):
+# Exclude metabolites that are "inorganic" (e.g. water):
 met_class = read.table('data/hmdb/hmdb_chemtax.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
 met_class = met_class %>% mutate(metabolite = tolower(metabolite))
 
@@ -115,7 +118,7 @@ full_list = full_list %>% filter(!is.na(gene_name)) %>% select(metabolite, metab
 length(unique(full_list$gene_name))
 
 # Merge the full_list with the list of colocalised loci that were involved with
-# the 144 common plasma metabolites, but first add in chr/pos info
+# the 141 common plasma metabolites, but first add in chr/pos info
 loci = read.table('data/gwas/indep_snps_from_paper.eur_only.txt', sep = '\t', header = T, stringsAsFactor = F)
 loci = loci %>% select(locus, SNP, chr, pos) %>% distinct
 
@@ -148,12 +151,26 @@ dat_prot = dat_prot %>% select(locus:End, Coding)
 length(unique(dat_prot$gene_name)) # 179 genes
 length(unique(dat_prot$SNP)) # 78 loci
 
+head(dat_prot)
+
+tmp_dat_prot = dat_prot %>% group_by(gene_name) %>% summarise(met = paste(unique(metabolite.hmdb), collapse = '; '),met_path = paste(unique(metabolite.pathway), collapse = '; '), loci = paste(unique(locus), collapse = '; '), SNP = paste(unique(SNP), collapse = '; '))
+
 writeLines(unique(dat_prot$gene_name), 'results/pathway/hmdb_genes.txt')
+write.table(tmp_dat_prot, 'results/pathway/hmdb_genes.supp_table.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 # write.table(dat_prot, 'results/hmdb_match/coloc_results.met_pathway_genes.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
-# How many genes directly affected any one of the 144 plasma metabolite?
-direct_gene = dat_prot %>% filter(metabolite.hmdb == metabolite.pathway) %>% pull(gene_name) %>% unique
-direct_snp = dat_prot %>% filter(metabolite.hmdb == metabolite.pathway) %>% pull(SNP) %>% unique
+# How many genes directly affected any one of the 141 plasma metabolite?
+direct_gene = dat_prot %>% filter(metabolite.hmdb == metabolite.pathway) %>% select(SNP:pos, metabolite.pathway, gene_name, name.protein, protein_type:Coding) %>% distinct
 
-length(direct_gene)
-length(direct_snp)
+tmp = direct_gene %>% group_by(gene_name) %>% summarize(metabolite.pathway = paste(unique(metabolite.pathway), collapse = '; '))
+
+direct_gene = left_join(direct_gene, tmp, by = 'gene_name', suffix = c('.remove', '')) %>% select(-metabolite.pathway.remove) %>% distinct %>% arrange(chr, pos)
+
+length(unique(direct_gene$gene_name))
+length(unique(direct_gene$SNP))
+
+head(direct_gene)
+
+# Save this list
+write.table(direct_gene, 'results/pathway/hmdb_genes.loci_match.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+

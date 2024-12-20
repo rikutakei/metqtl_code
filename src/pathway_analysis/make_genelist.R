@@ -1,7 +1,7 @@
 library(dplyr)
 library(tidyr)
 
-setwd('..')
+setwd('../..')
 
 # Load gene UCSC information
 gene = read.table('src/locuszoom/LocusZooms/UCSC_GRCh37_Genes_UniqueList2021.txt', sep = '\t', header = T, stringsAsFactor = F)
@@ -14,6 +14,10 @@ loci = loci %>% select(SNP, chr, pos) %>% distinct
 all_common = readLines('results/met_overlap/common_plasma_metabolite_snps.txt')
 plasma_only = readLines('results/met_overlap/plasma_only_snps.txt')
 plasma_urine = readLines('results/met_overlap/plasma_urine_snps.txt')
+
+length(all_common)
+length(plasma_only)
+length(plasma_urine)
 
 all_common = loci %>% filter(SNP %in% all_common)
 plasma_only = loci %>% filter(SNP %in% plasma_only)
@@ -36,6 +40,10 @@ plasma_urine = gene %>% select(Chrom, Start, End, Gene) %>% left_join(plasma_uri
 plasma_urine = plasma_urine %>% filter(between(Start, start, end) | between(End, start, end) | between(start, Start, End))
 plasma_urine_genes = unique(plasma_urine$Gene)
 
+length(all_common_genes)
+length(plasma_only_genes)
+length(plasma_urine_genes)
+
 writeLines(all_common_genes, 'results/pathway/all_common_met_genes.all.txt')
 writeLines(plasma_only_genes, 'results/pathway/plasma_only_met_genes.all.txt')
 writeLines(plasma_urine_genes, 'results/pathway/plasma_urine_met_genes.all.txt')
@@ -47,6 +55,10 @@ prot_only = gene %>% filter(Coding == 'proteincoding') %>% pull(Gene)
 all_common_genes_prot = all_common_genes[which(all_common_genes %in% prot_only)]
 plasma_only_genes_prot = plasma_only_genes[which(plasma_only_genes %in% prot_only)]
 plasma_urine_genes_prot = plasma_urine_genes[which(plasma_urine_genes %in% prot_only)]
+
+length(all_common_genes_prot)
+length(plasma_only_genes_prot)
+length(plasma_urine_genes_prot)
 
 writeLines(all_common_genes_prot, 'results/pathway/all_common_met_genes.prot_only.txt')
 writeLines(plasma_only_genes_prot, 'results/pathway/plasma_only_met_genes.prot_only.txt')

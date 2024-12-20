@@ -3,7 +3,7 @@ per_locus = function(dat, metsim = F) {
   # Remove the A/B/C signals from multi-signal loci:
   dat = dat %>% mutate(locus = gsub('_[A-Z]$', '', locus))
   # Merge the SNPs at multi-signal loci:
-  dat = dat %>% group_by(compound, phenostring, locus) %>% mutate(SNP = paste(unique(SNP), collapse = '; ')) %>% ungroup %>% distinct
+  dat = dat %>% group_by(compound, phenostring, locus) %>% mutate(SNP = paste(unique(SNP), collapse = ' / ')) %>% ungroup %>% distinct
   # For each locus, count up how many compounds/metabolites colocalised with it
   res = dat %>% distinct(compound, phenostring, SNP, locus) %>% group_by(SNP, locus) %>% summarize(count = n(), compound_id = paste(unique(compound), collapse = '; '), metabolites = paste(unique(phenostring), collapse = '; ')) %>% ungroup %>% arrange(desc(count))
   # It will be cool to see the breakdown of the types of metabolites that
@@ -36,7 +36,7 @@ plot_perloc = function(dat, facet = F, outname) {
   plot_dat = plot_dat +
     scale_fill_manual(values = unique(dat$color), labels = sort(unique(dat$category)), name = 'Category') +
     theme_bw() +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+    theme(axis.text.x = element_text(hjust = 1, angle = 90, vjust = 0.5)) +
     labs(x = '', y = 'Proportion of colocalised metabolite categories at each locus') +
     geom_col()
   ggsave(outname, width = 10, height = 8)

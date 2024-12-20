@@ -1,8 +1,9 @@
 \documentclass[a4paper,10pt]{article}
 
 \usepackage{booktabs}
+\usepackage{tablefootnote}
 \usepackage{graphicx}
-\usepackage{subcaption}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
 \usepackage{multirow}
 \usepackage{newfloat}
 \usepackage{setspace}
@@ -10,20 +11,21 @@
 \usepackage{authblk}
 \usepackage{color}
 \usepackage{soul}
+\usepackage{tabularx}
 \usepackage[super,comma,sort&compress]{natbib}
 \usepackage[hidelinks,colorlinks]{hyperref}
 
 \hypersetup{allcolors=blue}
 \urlstyle{rm}
 
-\DeclareFloatingEnvironment[name={\textbf{Supplementary Figure}},fileext=lsf,listname={List of Supplementary Figures}]{suppfigure}
-\DeclareFloatingEnvironment[name={\textbf{Supplementary Table}},fileext=lst,listname={List of Supplementary Tables}]{supptable}
+\DeclareFloatingEnvironment[name={{Supplementary Figure}},fileext=lsf,listname={List of Supplementary Figures}]{suppfigure}
+\DeclareFloatingEnvironment[name={{Supplementary Table}},fileext=lst,listname={List of Supplementary Tables}]{supptable}
 
 \newcommand{\beginsupplement}{
 	\setcounter{supptable}{0}
-	\renewcommand{\thesupptable}{\textbf{S\arabic{supptable}}}
+	\renewcommand{\thesupptable}{{S\arabic{supptable}}}
 	\setcounter{suppfigure}{0}
-	\renewcommand{\thesuppfigure}{\textbf{S\arabic{suppfigure}}}
+	\renewcommand{\thesuppfigure}{{S\arabic{suppfigure}}}
 }
 
 \topmargin=-2.5cm
@@ -38,14 +40,17 @@
 
 \renewcommand\Affilfont{\footnotesize}
 
-\title{Colocalisation of gout loci with metabolite levels reveal potential causal pathways}
+% \title{Colocalization of gout loci with metabolite levels reveal potentially causal pathways}
+\title{Colocalization analysis reveals shared genetic loci contributing to gout and metabolite levels}
 \date{}
 \author[1]{Riku Takei}
-\author[1]{Nicholas A. Sumpter}
-\author[1]{Megan P. Leask}
-\author[1,2]{Tony R. Merriman}
+\author[2]{Nicholas A. Sumpter}
+\author[3]{Megan P. Leask}
+\author[1,4]{Tony R. Merriman}
 \affil[1]{Division of Clinical Immunology and Rheumatology, University of Alabama at Birmingham, Birmingham, AL, United States}
-\affil[2]{Department of Biochemistry, University of Otago, Dunedin, New Zealand}
+\affil[2]{Department of Internal Medicine and Radboud Institute of Molecular Life Science, Radboud University Medical Center, Nijmegen, The Netherlands}
+\affil[3]{Department of Physiology, University of Otago, Dunedin, New Zealand}
+\affil[4]{Department of Microbiology and Immunology, University of Otago, Dunedin, New Zealand}
 
 % \addbibresource{/Users/rikutakei/Documents/zotero_library/all_refs.bib}
 
@@ -66,11 +71,11 @@
 \end{center}
 
 \noindent
-Genetic association studies have shown evidence of genes involved in various metabolic and immunological pathways, majority of which are part of the biosynthesis and transport of uric acid (known causal compound of gout).
-Other than those involved with uric acid biosynthesis and immune response, the causal role of remaining genes and pathways in gout is not clear.
-The difficulty of linking genetic association data to disease/trait is partly due to the complex nature of some loci and the genes within those loci being involved in various metabolic pathways.
-Here, we present results from a colocalisation analysis of gout and metabolite quantitative trait loci (metQTL), shedding light on to the metabolites that are likely affected by gout genetic loci.
-Further, we provide evidence of causality for some of the metabolites found in this analysis by Mendelian randomisation.
+Genetic association studies in gout have identified genetic variants in or near genes involved in the biosynthesis and transport of urate and in immunological pathways.
+However, the causal role of the remaining genetic variants, genes, and pathways in gout is not clear.
+Here, we present the results from a genetic colocalization analysis of gout-associated signals with metabolite quantitative trait loci (metQTL), shedding light on the metabolites that are likely directly affected by genetic variants associated with gout.
+We identified 141 candidate metabolites with evidence of colocalization with at least one gout-associated genetic signal, of which 29 showed evidence of a causal relationship with gout by Mendelian randomization.
+Among the 29 metabolites were lysophosphatidylcholines, which may affect the inflammatory response by binding to the TLR-2/4 receptors, providing plausible candidate metabolites for future studies that link metabolites with inflammatory processes in gout.
 % ]
 
 % \vspace*{0.25em}
@@ -80,52 +85,75 @@ Further, we provide evidence of causality for some of the metabolites found in t
 \end{center}
 
 \noindent
-Gout is a common inflammatory arthritis caused by an immune response against monosodium urate (MSU) crystals that primarily occur in joints\cite{dalbeth_gout_2021}.
-Though hyperuricemia (characterized by serum urate concentration $\ge7$mg/dL\citep{dalbeth_gout_2021}) is a prerequisite of gout, an extra inflammatory response by the NLRP3-inflammasome is required to trigger gouty inflammation\citep{dalbeth_gout_2021,martinon_gout-associated_2006}.
-Genome-wide association studies (GWAS) in gout\citep{tin_target_2019,major_genome-wide_2022,li_replication_2017,kawamura_genome-wide_2019,zhou_global_2022} have revealed many genetic loci, majority of which are involved in biosynthesis and transport of urate.
-Even though the most recent genetic study of gout\citep{major_genome-wide_2022} revealed weak evidence of causal role of clonal hema\-topoiesis of indeterminate potential (CHIP) pathway that target \textit{DNMT3A} with gout, definitive causal pathway of gouty inflammation is not clear.
+Gout is a common inflammatory arthritis caused by an innate immune response to monosodium urate (MSU) crystals that primarily deposit in joints\citep{dalbeth_gout_2021}.
+Though hyperuricemia (characterized by serum urate concentration $\ge7$mg/dL\citep{dalbeth_gout_2021}) is a prerequisite of gout, an inflammatory response by the NLRP3-inflammasome is required to trigger gouty inflammation\citep{dalbeth_gout_2021,martinon_gout-associated_2006}.
+Genome-wide association studies (GWAS) in gout\citep{tin_target_2019,major_genome-wide_2024,li_replication_2017,nakayama_subtype-specific_2020,kawamura_genome-wide_2019,zhou_global_2022} have revealed many genetic loci, some of which have been implicated in biosynthesis and transport of urate.
+\\
 
-Trained immunity is a phenomenon where innate immune cells, such as natural-killer (NK) cells and macrophages, have gained an increased and non-spec\-ific response against subsequent infections after being exposed to the initial pathogen\citep{netea_trained_2011}.
-Urate has been demonstrated to act as danger-associated molecular patterns (DAMPs) and elicit an innate immune response\citep{cabau_urate-induced_2020} (\hl{need additional citations}).
-Furthermore, soluble urate induces epigenetic reprogramming of innate immune cells and contribute to trained immunity\citep{cabau_urate-induced_2020} (\hl{need additional citations}).
-In fact, pathway analysis in gout revealed chromatin modifications as one of the significantly enriched pathways and many histone methyltransferase genes were included in the analysis\citep{major_genome-wide_2022}, suggesting an emerging role of histone modifications in gout, most likely via train\-ed immunity.
-With that said, there has been little to no direct evidence that link the genetic loci involved in gout with trained immunity, other than those involved in urate synthesis and transport (\hl{need reference}).
+Metabolomics is a field that involves the measurement of a large number of metabolites within a group of participants to identify metabolite levels that are associated with a phenotype of interest\citep{johnson_metabolomics_2016,li_metabolomics_2023}.
+When these cohorts also contain genetic information it allows for the association of genetic variants with metabolite levels\citep{chen_genomic_2023,schlosser_genetic_2023,yin_genome-wide_2022} and provide valuable insights into the biological mechanisms by narrowing the search space for causal metabolites that may be causally related.
+% By utilising genetic data, genetic variants that associate with metabolite levels can be identified, thereby directly linking the mode in which genetic variants may play a causal role in certain phenotype through altered metabolite levels.
+% When genetic data is utilized, genetic variants that associate with metabolite levels can be identified, directly linking the role of genetic variants with the phenotype through altered metabolite levels.
+Recently, there have been several GWAS of metabolomic profile that associated genetic variants with metabolite levels: Chen et al.\citep{chen_genomic_2023} studied 1,091 blood metabolites and 309 metabolite ratios in 8,299 individuals from the Canadian Longitudinal Study on Aging (CLSA) cohort, Yin et al.\citep{yin_genome-wide_2022} studied 1,391 metabolites in the plasma of 6,136 male participants from the METSIM study, and Schlosser et al.\citep{schlosser_genetic_2023} studied 1,296 plasma and 1,399 urine metabolites from 5,023 participants from the German Chronic Kidney Disease (GCKD) study.
+These studies provide a wealth of resources to study the effect of genetic variations that influence metabolite concentrations in both plasma and urine, which in turn can be used for insights into the biological mechanism of a phenotype of interest.
+\\
 
-Perhaps one of the reasons why it is so difficult to identify causal genes and pathways from genetic studies could be due to the lack of evidence linking the product of the identified genetic loci with the phenotype.
-Even if a genetic locus is supported by evidence of expression quantitative loci (eQTL), there is no guarantee that the gene is translated, active in the tissue of interest, and elicit the response that is relevant to the phenotype.
-Furthermore, extensive functional analyses in model organisms are required to evaluate these points.
-In effect, genetic studies may be too broad to make meaningful inference of the causal pathways, especially for complex genetic diseases.
+In the context of gout, however, only a few metabolomics studies have been done; of note are three studies by Renaudin et al.\citep{renaudin_gout_2020}, Lyu et al.\citep{lyu_metabolomics_2022}, and Joshi and McCormick et al.\citep{joshi_prediagnostic_2023}.
+Renaudin et al.\citep{renaudin_gout_2020} explored the metabolic profile of bone marrow-derived macrophages (BMDMs) and THP-1 cells stimulated with either MSU crystal or calcium pyrophosphate (CPP) crystal and found that the glycolytic pathway, but not oxidative phosphorylation (OXPHOS), has a pivotal role in the IL-1$\beta$-mediated inflammatory process.
+Lyu et al.\citep{lyu_metabolomics_2022} recruited subjects in various stages of gouty arthritis including no gout, hyperuricemia, acute gout, intermittently symptomatic gout, and chronic tophaceous gout, to identify biomarkers associated with progression of gouty inflammation.
+They identified four metabolites (kynurenic acid, N1-Methyl-2-pyridone-5-carboxamide, DL-2-Aminoadipic acid, and 5-hydroxyindole acetic acid) as potential biomarkers for progression of gout.
+More recently, Joshi et al.\citep{joshi_prediagnostic_2023} utilized metabolomics data from the UK Biobank (UKB) cohort to investigate the metabolomic changes that predict incident gout, using Mendelian randomization to identify glycoprotein acetyls (GlycA) as a causal metabolite of incident gout.
+Lower levels of glutamine were associated with increased risk of gout in both Renaudin et al.\citep{renaudin_gout_2020} and Joshi et al.\citep{joshi_prediagnostic_2023}, providing consistent evidence of the role of glutamine in the biological process of gout, possibly through glutaminolysis and trained immunity from the accumulation of fumarate\citep{arts_glutaminolysis_2016}.
+In fact, the most recent genetic study of gout\citep{major_genome-wide_2024} identified that the proline allele of the p.Leu581Pro missense variant of the glutaminase 2 enzyme, which associated with reduced levels of glutamine, also associates with increased risk of gout, supporting the findings from these metabolomics studies that show the important role of glutamine in gout.
+\\
 
-Recently there have been studies looking at the metabolomic profile of a group of individuals.
-Yin \textit{et al.}\citep{yin_genome-wide_2022} studied 1,391 metabolites in plasma of 6,136 male participants from the METSIM study and Schlosser \textit{et al.} were able to measure 1,296 plasma and 1,399 urine metabolites from 5,023 participants from the German Chronic Kidney Disease (GCKD) study, providing a wealth of resources to study the changes in metabolite levels in plasma and urine.
-Together with the genetic association summary statistics, it would be possible to identify metabolites that are affected by the genetic variants from the association study and, since metabolite levels are direct consequences of enzymatic activities regardless of its origin, narrow down the causal mechanism of the phenotype of interest.
-We therefore conducted colocalisation analyses of genetic loci from the largest GWAS of gout with the plasma and urine metabolite quantitative trait loci (metQTL) data from METSIM and GCKD studies in order to identify meta\-bolites that may be affected by genetic loci that affects gout.
+Even though these studies provide valuable insights into the biological processes surrounding gout, only a handful of metabolites have been identified and causally associated with gout and progression of gout.
+Since metabolite levels are direct consequences of enzymatic activities, by combining the largest genetic association data of gout\citep{major_genome-wide_2024} and the recent metabolomics studies\citep{chen_genomic_2023,yin_genome-wide_2022,schlosser_genetic_2023} it may be possible to identify metabolites that are also associated with gout-associated genetic variants and consequently identify causal molecular mechanisms of gout.
+Here we conducted colocalization analyses of genetic loci from the most recent GWAS of gout\citep{major_genome-wide_2024} with the plasma and urine metabolite quantitative trait loci (metQTL) data from CLSA\citep{chen_genomic_2023}, METSIM\citep{yin_genome-wide_2022}, and GCKD\citep{schlosser_genetic_2023} studies in order to identify meta\-bolites that may be affected by genetic loci that also affect gout.
+Our analysis included pathway enrichment analysis to highlight pathways that are likely involved with the gout-associated metabolites and also include two-sample Mendelian randomization of the metabolites with gout to assess possible causal relationships of the metabolite levels with gout.
+\\
 
 \begin{center}
 	\large{Methods}
 \end{center}
 
 \noindent
-\textit{Metabolite quantitative trait loci (metQTL) data}\\
-1,391 plasma metabolite GWAS data from the METSIM study and 1,296 plasma and 1,399 urine metabolites from the GCKD study were downloaded (see Data).
-METSIM plasma data were lifted over to hg19 positions using GATK liftover (\hl{ref}).
-1,101 plasma metabolites that were present in both the METSIM and GCKD studies were meta-analysed together using METAL (\hl{ref}).
-In total, 1,586 unique plasma and 1,399 urine metabolite data were used for the colocalisation analyses.
+\textit{Summary data and meta-analysis}\\
+Association summary statistics for 1,400 plasma and plasma metabolite ratios from the CLSA cohort\citep{chen_genomic_2023}, data from 1,391 plasma metabolites from the METSIM study\citep{yin_genome-wide_2022}, and data from 1,296 plasma and 1,399 urine metabolites from the GCKD study\citep{schlosser_genetic_2023} were downloaded from the GWAS Catalog (https://www.ebi.ac.uk/gwas/) and METSIM Metabolomics PheWeb (https://pheweb.org/metsim-metab/).
+Full European gout and urate GWAS summary statistics from Major et al.\citep{major_genome-wide_2024} were used in all of the analyses.
+For the purpose of Mendelian randomisation, fixed-effect meta-analysis was carried out using METAL\citep{willer_metal_2010} on the 141 metabolites that colocalized with gout genetic signals and that were also present in all three metabolite data sets.
 \\
 
 \noindent
 \textit{Colocalization analysis}\\
-Region for colocalisation was restricted to lead gout SNP ±500kb and variants present in both the gout GWAS and metQTL data were kept.
-Colocalisation was carried out using the `coloc' R package for the 291 regions around the gout lead variants from 276 loci.
-A locus was considered to be colocalised if the posterior probability of colocalisation (PPC) was greater than or equal to 0.8.
-For each of the metabolites, number of lead variants and unique loci that colocalised with the metabolite was identified and counted.
-Since elevated urate level is a prerequisite for gout and their genetics are highly correlated (\hl{ref}), the number of loci that colocalised with ``urate'' was used as a positive control to determine the metabolites that were of relevance to gout.
+The regions for colocalization was restricted to the 276 independent gout loci (lead variant ±500kb window) and only the variants (based on rsID) present in both the gout GWAS and metQTL data were kept.
+Colocalization of gout summary statistics with each of the metQTL association summary statistics was carried out using the `coloc'\citep{giambartolomei_bayesian_2014} R\citep{r_core_team_r_2023} package for the 276 loci.
+Loci that contained less than 100 variants within the ±500kb window of colocalization region were excluded from the analysis.
+A locus was considered to be colocalized if the posterior probability of colocalization (hypothesis 4) was ≥ 0.8.
 \\
 
 \noindent
-\textit{Mendelian randomisation}\\
-Metabolites with greater than or equal to the number of colocalised loci with urate were then considered for Mendelian randomisation analysis to determine the causal relationship with gout using the ‘MendelianRandomization’ package in R.
-Inverse variance-weighted (IVW) and weighted median methods were used to test for causality, and MR-Egger method was used to test for pleiotropy by considering the MR-Egger intercept.
+\textit{Mapping of metabolite names}\\
+Not all of the metabolite names used in the three metQTL data sets were consistent, so the metabolite names were mapped to those in the Human Metabolome Database\citep{wishart_hmdb_2022} (HMDB version 5.0; downloaded from \url{https://hmdb.ca/downloads}).
+The original metabolite name in each of the data set was matched with the metabolite name (or its synonym) as shown in HMDB.
+If a metabolite name did not match exactly with the HMDB metabolite name, then the name was matched by approximate string matching using the `fedmatch'\citep{cohen_us_2021} package in R.
+In cases where a metabolite name matched with multiple candidate names, the names were checked manually in order to determine the metabolite name that was most likely correct based on chemical structure.
+\\
+
+\noindent
+\textit{Pathway enrichment analysis}\\
+Genes were identified from the gout loci (lead variant ±500kb window) that colocalized with any of the 141 metabolites common to all three metQTL data sets.
+All genes that had their gene region overlapped with the 1Mb region around the lead variant were considered for the pathway analysis.
+The list of genes was used for pathway enrichment analysis using DAVID\citep{huang_systematic_2009,huang_bioinformatics_2009}.
+\\
+
+\noindent
+\textit{Mendelian randomization}\\
+141 metabolites that colocalized with gout and were present in all three metabolite data sets were considered for Mendelian randomization (MR) analysis to determine their causal relationship with gout using the ‘MendelianRandomization’\citep{yavorska_mendelianrandomization_2017} package in R.
+Lead variants from each of the 141 meta-analyzed metabolite summary statistics were identified using the \texttt{--clump} option in PLINKv1.90\citep{chang_second-generation_2015}, using the European ancestry samples from the 1000 Genomes Project\citep{auton_global_2015} as the reference for linkage disequilibrium (LD).
+To ensure that the lead variants identified were LD-independent, pairwise LD was calculated for all of the lead variants using PLINK and 1000 Genomes Project European ancestry data, and variants with $r^{2} \ge 0.01$ were removed.
+Any metabolite that had two or less genetically-associated lead variants was not considered for the MR analysis due to technical limitations of the MR methods used.
+Inverse variance-weighted (IVW) and weighted median (WM) methods were used to test for causality of the metabolite with gout (and vice versa), and the MR-Egger method was used to test for pleiotropy by considering the MR-Egger intercept.
 \\
 
 \begin{center}
@@ -133,65 +161,336 @@ Inverse variance-weighted (IVW) and weighted median methods were used to test fo
 \end{center}
 
 \noindent
-Colocalisation analysis was carried out for 1,586 plasma and 1,399 urine metQTL data with 291 gout lead variants within 276 independent genetic loci.
-723 ($723 / 1,586 =$ 45.6\%) plasma and 430 ($430 / 1,299 =$ 33.1\%) urine metabolites colocalised with at least one gout locus ($187 / 276 =$ 67.8\% loci showed colocalisation) at posterior probability of colocalisation (PPC) $\ge 0.8$, highlighting the extent in which genetic loci have influence on the levels of human metabolome.
-Between the 723 plasma and 430 urine metabolites, 163 ($163 / 990 =$ 16.5\%) metabolites were common between the two metabolomes.
-Among these 163 metabolites are urate and its precursor molecules xanthine and hypoxanthine, variety of amino acids and amino acid compounds, and steroid metabolites, such as androstenediol mono/disulfates and dehydroepiandrosterone sulfate (DHEA-S).
+Colocalization analysis was first carried out for 1,391 plasma metabolites from the METSIM cohort with 276 independent genetic loci from the European gout GWAS from Major et al.\citep{major_genome-wide_2024} (Supplementary table S1).
+In total, 633 metabolites (45.5\% of tested metabolites) colocalized with at least one gout locus implicating 135 (48.9\%) of the 276 tested loci, highlighting the extent to which gout genetic loci associate with the human metabolome (Table \ref{tab:sum_coloc}).
+On average, a metabolite colocalized with 1.56 gout loci in plasma, and there were no more than six colocalized loci for any one plasma metabolite.
+Conversely, the average number of metabolites that colocalized with a particular gout locus was 7.12, with the largest number of metabolites (n = 178) colocalizing at the \textit{GCKR} locus (chr2:26.91MB-28.71MB).
+These results suggest that metabolites are genetically controlled by a small number of gout-associated loci while a gout genetic locus is able to influence a variety of metabolites.
+\\
 
-On average, a metabolite colocalised with 1.6 and 1.3 gout loci for plasma and urine, respectively, with no more than seven and five colocalised gout loci for any one plasma or urine metabolite.
-Conversely, the average number of metabolites that colocalised at any gout locus was 8.3 plasma and 4.2 urine metabolites, respectively, with the largest number of metabolites colocalising at the \textit{GCKR} (chr2:26.91-28.71MB) and \textit{SLC17A1-A4} (chr6:25.07-32.85MB) loci with 179 plasma and 66 urine metabolites, respectively.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TODO: sentence below should focus more on how a locus probably affects the
-% whole pathway rather than a single enzyme for that metabolite (hence why you
-% get a lot of metabolites)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% It is interesting to note that only a handful of loci affects the level of just one metabolite, yet a single genetic locus can influence a range of metabolites, indicating how pleiotropic a genetic lous can be and how difficult it may be to disentangle and pinpoint the correct causal pathway(s) based on the genes present at a given locus.
+We repeated the colocalization analysis in metabolite data sets from two independent cohorts: CLSA and GCKD (Table \ref{tab:sum_coloc} and Supplementary tables S2-S3).
+Similar to what was observed with the METSIM cohort, 137 (49.6\%) gout loci colocalized with 719 (51.4\%) metabolites from the CLSA cohort (Table \ref{tab:sum_coloc}; 7.96 metabolites per gout locus).
+In the GCKD cohort, the number of loci colocalized with plasma and urine metabolites were comparable to the number observed in METSIM (136 (49.3\%) and 138 (50.0\%) loci), but with less metabolites compared to the METSIM and CLSA cohorts (482 (37.2\%) plasma and 430 (30.7\%) urine metabolites; 4.74 and 4.17 metabolites per locus, respectively).
+Furthermore, the average number of gout loci that colocalized with a particular metabolite was comparable to that observed in the METSIM cohort (1.55 in the CLSA cohort, 1.36 and 1.34 loci with plasma and urine metabolites in the GCKD cohort, respectively).
+Compared to the METSIM data set, the average number of metabolites that colocalized with a gout locus was slightly larger in the CLSA cohort (7.96 metabolites) and lower in the GCKD cohort (4.74 for plasma and 4.17 for urine metabolites), though this may be due to the lower total number of metabolites that colocalized with the gout loci in the GCKD data set.
+However, the overall trend where there are more colocalized metabolites per locus compared to the number of gout loci that colocalize with a metabolite was consistent across cohorts.
+\\
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TODO: Of the 548 metabolites that colocalised with gout, only
-% 4 genes/proteins that were directly involved in the reaction/transport of the
-% metabolites (12 metabolites in total) were within the colocalised region.
-% This suggests that: 1) majority of genetic loci are not "directly" involved
-% with the metabolite(s) that are being measured, but probably affects
-% precursor and/or downstream metabolites; 2) metabolites measured in
-% metabolomics studies are either a stable intermediate or an end product of
-% a pathway, since the intermediate/precursor metabolites *should* colocalise,
-% if measured correctly, if at all (and also line up with the gene/protein
-% within the locus)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h]
+	\hspace{-6.0em}
+	\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+		\hline
+		& Total number of metabolites & Number of unique metabolites colocalized with gout loci & Number of gout loci colocalized with metabolites & Average number of metabolites that colocalized with gout locus\tablefootnote[1]{Note that the average number of metabolites per gout locus includes metabolites colocalized to multiple loci.} & Average number of loci that colocalized with a metabolite\\
+		% & num(met) & num(coloc) & num(loci coloc) & mean(met) & mean(loci)\\
+		\hline
+		METSIM             & 1,391 & 633 & 135 & 7.12 & 1.56 \\
+		CLSA               & 1,400 & 719 & 137 & 7.96 & 1.55 \\
+		GCKD (plasma) & 1,296 & 482 & 136 & 4.74 & 1.36 \\
+		GCKD (urine)  & 1,399 & 430 & 138 & 4.17 & 1.34 \\
+		\hline
+	\end{tabular}
+	\caption{Summary of the number of metabolites and gout genetic loci colocalized with one another}
+	\label{tab:sum_coloc}
+\end{table}
+\\
 
-Since elevated serum urate level is a prerequisite for gout, and the fact that gout and urate are highly genetically correlated, we decided to use urate as the baseline to determine which metabolites are likely by-product of biological pathways and/or enzymes involved in gout.
-For plasma and urine, there were two and three gout loci that colocalised with urate, respectively.
-We observed \hl{XX} plasma and \hl{XX} urine metabolites that had the same or greater number of gout loci colocalised as urate.
-Of these metabolites, \hl{XX} plasma and \hl{XX} urine metabolites showed significant evidence of causality of gout using Mendelian randomisation (inverse variance-weighted (IVW) or weighted median (MED) P $\le$ \hl{0.XXX}).
-Of the \hl{XX} significant metabolites, \hl{X} showed evidence of pleiotropy (MR-Egger intercept ($=/\ge/\le$) \hl{X.XXX}), including \hl{urate, androsterone sulfate (and other metabolite)}
+\begin{figure}[t]
+	\hspace{-30pt}
+	\includegraphics[width=1.2\textwidth]{"../results/plots/coloc/metsim_category_prop.stacked.total.png"}
+	\caption{Proportion of broad categories for all 1,391 METSIM metabolites (left panel), 633 colocalized metabolites (middle panel), and 23 gout loci with at least ten colocalized metabolites (right panel).}
+	\label{fig:metsim_category}
+\end{figure}
 
-In order to ensure there was no reverse causality, that is, gout having a causal effect on the metabolite level, we reversed the Mendelian randomisation analysis.
-This showed \hl{(XX or no)} significant evidence of gout altering the level of metabolites in plasma and/or urine.
+Next, we investigated the types of metabolites that colocalized at each of the gout loci in the METSIM cohort using the ten category descriptions (amino acids, carbohydrate, cofactors and vitamins, energy, lipid, nucleotide, partially characterized, peptide, uncharacterized, and xenobiotics; Supplementary table S5).
+Among the 633 metabolites that colocalized with a gout locus, lipid metabolites were the most common (proportion of metabolites that were lipids = 0.498), followed by uncharacterized metabolites (0.177), and amino acids (0.174).
+These proportions were similar to the overall proportions observed in all METSIM metabolites (n = 1,391 metabolites; Figure \ref{fig:metsim_category} and Supplementary table S5).
+The proportions from the colocalized metabolites were similar in loci that had >10 colocalized metabolites (23 loci in total), except at the \textit{ABCG2} locus (rs2231142, chr4:86.79MB-90.23MB; Figure \ref{fig:metsim_category}).
+At the \textit{ABCG2} locus, 70\% (7/10) of the metabolites that colocalized were xenobiotics, likely reflecting the role of ABCG2 as a universal transporter for a variety of drugs, metabolites, and molecules\citep{austin_doyle_multidrug_2003}, including urate (one of the colocalized metabolites at this locus and causal of gout).
+This result was not able to be compared with the CLSA and GCKD cohorts, as the category information was not available in these metabolite datasets.
+\\
 
-% Ten metabolites colocalised with gout genetic association signals in at least five loci at PPC ≥ 0.8: urate, retinol (vitamin A), diacylglycerol (DAG), androstenediol disulfate, androsterone sulfate, threonine, glutamine, pyroglutamine, serine, and alanine.
-% Of the ten metabolites that colocalised with genetic signals of gout, four metabolites showed significant evidence of causality for gout in one of the two methods used to test for causality.
-% The metabolites were urate (inverse variance-weighted (IVW) P = $6.01\times10^{-5}$ and weighted median (MED) P = $3.19\times10^{-25}$), androsterone sulfate (PIVW = $7.71\times10^{-3}$ and PMED = $5.87\times10^{-10}$), DAG (PIVW = $1.42\times10^{-2}$ and PMED = $3.96\times10^{-5}$), and glutamine (PIVW = 0.46 and PMED = $3.95\times10^{-3}$).
-% Urate and androsterone sulfate showed evidence of pleiotropy (MR-Egger intercept P = $2.19\times10^{-2}$ and $5.13\times10^{-3}$, respectively).
+% theophylline
+% 4-hydroxychlorothalonil
+% perfluorooctanesulfonate (PFOS)
+% perflu orooctanoate (PFOA)
+% sulfate of piperine metabolite C18H21NO3 (1)*
+% 3,5-dichloro -2,6-dihydroxybenzoic acid
+% 3-bromo-5-chloro-2,6-dihydroxybenzoic acid*
+% urate
+% X - 15728
+% X - 16944
+
+% category                mean_prop max_prop sd_prop
+% Amino_Acid               0.173     0.7     0.197
+% Carbohydrate             0.00408   0.0526  0.0121
+% Cofactors_and_Vitamins   0.0203    0.1     0.0308
+% Energy                   0.000234  0.00562 0.00115
+% Lipid                    0.540     0.917   0.239
+% Nucleotide               0.0194    0.1     0.0324
+% Partially_Characterized  0.0165    0.0952  0.0286
+% Peptide                  0.0145    0.1     0.0288
+% Uncharacterized          0.163     0.273   0.0849
+% Xenobiotics              0.0493    0.7     0.144
+
+% TODO: Currently not using the beginning of a new section looking at the
+% category data in Schlosser, since data is kinda messy and hard to explain
+% (not enough overlap, not using all 10 categories, etc.)
+%
+% Since the metabolite data set from Schlosser does not contain the category information as in the METSIM data set, the category information from METSIM was added for the metabolites that could be identified in the Schlosser metabolite data set by matching the metabolite names through Human Metabolome Database (HMDB) metabolite names (Methods).
+% 257 (51.7\%) plasma and 164 (36.3\%) urine metabolites were able to be matched with the METSIM data set.
+
+\begin{figure}[h]
+	% \includegraphics[width=1.2\textwidth]{"../results/plots/coloc/metsim_category_prop.stacked.png"}
+	\includegraphics[width=0.5\textwidth]{"../results/plots/venn/plasma_metabolite_overlap_venn.bw.pdf"}
+	\includegraphics[width=0.5\textwidth]{"../results/plots/venn/plasma_urine_metabolite_overlap_venn.bw.pdf"}
+	\caption{Venn diagram showing the overlap of the colocalized plasma metabolites in METSIM, CLSA, and GCKD cohorts (left), and the overlap of 141 common metabolites with colocolised GCKD urine metabolites (right).}
+	\label{fig:venn}
+\end{figure}
+
+To identify plasma metabolites that were colocalized in the three data set (METSIM, CLSA, and GCKD), the metabolite names from each data sets were first mapped to standard metabolite names from the Human Metabolome Database (HMDB; Methods).
+In total, 359 (359/633 = 56.7\%), 326 (326/719 = 45.3\%), and 274 (274/482 = 56.8\%) plasma metabolites from METSIM, CLSA, and GCKD cohorts matched with an HMDB metabolite name, respectively, of which 141 (141/529 = 26.7\%) metabolites were common in all three data sets (Figure \ref{fig:venn} and Supplementary table S6).
+Of the 141 common plasma metabolites 89 (63.1\%) did not colocalize in urine (out of 218 urine metabolites that had a HMDB metabolite name; Figure \ref{fig:venn} and Supplementary tables S7 and S8).
+\\
+
+To determine the biological pathways represented by the colocalized metabolites, pathway enrichment analysis was carried out using the genes present in the loci that colocalized with 141 plasma metabolites that were common among all three data sets.
+Three sets of protein coding genes (1,489, 1,245, and 908 genes) were identified from the loci that colocalized with all 141 plasma, 89 plasma-specific, or 52 metabolites present in both plasma and urine, respectively (Methods).
+Fifteen, eight, and nine pathways were significantly enriched (FDR-adjusted P $\le 0.05$) with the three gene sets (Supplementary tables S9-S11), respectively.
+Notable pathways identified from plasma-specific genes included glycolysis/gluconeogenesis, pyruvate metabolism, ethanol oxidation, and retinol metabolic process, indicating the genes present in the loci that colocalized specifically with the plasma metabolites may be derived from metabolic processes for energy generation.
+In contrast, pathways that were enriched by the genes present in the loci that colocalized with both plasma and urine mainly included transportation, rather than metabolism, of molecules and compounds, such as urate metabolism and transport, transmembrane and organic anion transport, and bile transport and secretion.
+Many of the plasma-specific and plasma and urine pathways were present in the full list of genes (set 1), though there were some unique pathways that did not appear in the other two sets including the PI3K-AKT signaling pathway, and the insulin resistance and signaling pathway.
+\\
+
+Given that not all of the genes will be directly involved with the biological pathways that affect the metabolite level, we focused on identifying genes directly involved with generation of the 141 colocalized plasma metabolites (Figure \ref{fig:met_assoc_w_loci}).
+\begin{figure}[b!]
+	\centering
+	\includegraphics[width=1.0\textwidth]{"./ppt_image.v2.png"}
+	\caption{Schematic of the identification of metabolites directly affected by genes present in the gout loci that colocalized with metabolite levels.}
+	\label{fig:met_assoc_w_loci}
+\end{figure}
+We first identified 2,105 pathways that included at least one of the 141 plasma metabolites based on the pathway information in HMDB and extracted 6,288 metabolites from these pathways to ensure that any upstream or downstream metabolites, and therefore the genes that may affect the level of the 141 plasma metabolites, were included.
+Based on the information available in the Human Metabolome Database (HMDB), 3,202 genes encoding enzymes and proteins that directly affected the 6,288 metabolites were extracted and matched back to the loci that colocalized with the 141 plasma metabolites, of which 179 genes were located within the colocalized loci.
+This list of 179 genes is the most relevant set of genes that may affect the 141 plasma metabolite levels directly or indirectly, as the protein products of these genes affect either the colocalized metabolite itself, or affect the metabolite that is up- or downstream to the metabolite of interest in a pathway (Supplementary table S12).
+Of the 179 genes, however, only 17 at 9 gout loci encoded proteins that directly metabolizes or generates the colocalized metabolite; for example, the \textit{GLS2} (encoding glutaminase 2) was identified at the rs58310495 locus (chr12:21.27MB-21.5MB region) which colocalized with L-glutamine (Supplementary table S13).
+Pathway enrichment analysis of the 179 genes identified 71 enriched pathways (FDR-adjusted P $\le 0.05$), of which 63 were not identified in the previous analyses, though some were closely related, such as fatty acid metabolism, metabolism of carbohydrates, and transport of organic anions (Supplementary table S14).
+Among the 63 significant pathways were estrogen metabolic process, androgen biosynthetic process, steroid biosynthesis, mitochondrial fatty acid beta-oxidation, a variety of amino acid metabolic processes (including, but not limited to, glutamine, arginine, proline, valine, leucine, and isoleucine), metabolism of water-soluble vitamins and cofactors.
+\\
+
+Lastly, two-sample Mendelian randomization (MR) analysis was carried out to evaluate causality of the plasma metabolites with gout.
+In order to focus the search for metabolites that are most likely causal for gout, we focused on the 141 plasma metabolites that had metQTL colocalized with gout genetic association signals that were common amongst the three plasma metabolite data sets.
+The summary statistics of all 141 plasma metabolites of the three data sets were meta-analyzed and genetically-independent lead variants genetically associated with the level of each metabolite were identified (Methods).
+Of the 141 plasma metabolites, 126 metabolites had at least three independent lead variants for the MR analysis (Methods).
+29 metabolites (including urate) showed evidence of causality with gout (Bonferroni-corrected P \le\ $3.97\times10^{-4}$) in either the inverse variance-weighted (IVW) or weighted median (WM) methods, of which four metabolites (3,5-dichloro-2,6-dihydroxybenzoic acid, mannose, myo-inositol, and perfluorooctanoate) showed evidence of pleiotropy (MR-Egger intercept P of 0, $2.31\times10^{-14}$, $3.05\times10^{-11}$, and 0, respectively; Supplementary table S15).
+Urate was not pleiotropic with gout (MR-Egger intercept P = 0.32).
+Among the 29 metabolites were lysophosphatidylcholines (LPCs; such as 1-oleoyl-GPC, 1-palmitoleoyl-GPC, and 1-palmitoyl-2-palmitoleoyl-GPC), acylcarnitines (such as (R)-3-hydroxybutyrylcarnitine and 3-hydroxyhexanoylcarnitine), amino acid derivatives (such as gamma-glutamylglutamine, N-acetylalanine, and N-acetylglycine), and sugar molecules (such as mannose and myo-inositol).
+\\
+
+The effect estimates of two of the three acylcarnitines ((R)-3-hydroxy\-butyryl\-carnitine and 3-hydroxy\-hexanoyl\-carnitine) were in a positive direction, indicating that the increased level of these metabolites increase the risk of gout.
+In contrast, all three lysophosphatidylcholines (1-oleoyl-GPC, 1-palmitoleoyl-GPC, and 1-palmitoyl-2-palmitoleoyl-GPC) showed negative effect estimates, suggesting a protective role of LPCs in gout.
+To evaluate reverse causality, that is gout having a causal effect on the metabolite level, we reversed the MR analysis to test the causality of gout on the metabolite levels and found urate to be the only metabolite that had evidence of causal relationship with gout (P_{IVW} = $3.38\times10^{-4}$ and P_{WM} = $7.77\times10^{-3}$; Supplementary table S16).
+However, gout also had evidence of pleiotropy with urate (MR-Egger intercept P = $5.67\times10^{-4}$), reflecting the fact that the gout variants affect both urate levels and gout, making it difficult to determine the direction of causality.
+Since urate is a known causal risk factor of gout, we also tested the causality of these 28 metabolites (29 metabolites sans urate) with Major et al.\citep{major_genome-wide_2024} urate GWAS and found 24 of 28 metabolites with evidence of causality (Bonferroni-corrected P \le $1.79\times10^{-3}$; Supplementary table S17), with gamma-glutamylthreonine, glycocholenate-sulfate, N-acetylalanine, and octadecanedioate showing no evidence of causality with urate.
+There were six metabolites that showed evidence of pleiotropy (1-oleoyl-GPC, eicosanedioate, homocitrulline, mannose, myo-inositol, and perfluorooctanoate; Supplementary table S17).
+Testing for reverse causality, there was no evidence of urate having causal effect on the levels of the 28 metabolites (Supplementary table S18), thus 18 metabolites (24 urate-associating metabolites \textminus\ 6 pleiotropic metabolites) may be causal of gout via their effect on urate.
+\\
+
 
 \begin{center}
 	\large{Discussion}
 \end{center}
 
 \noindent
-\hl{Discussion intro}
+There have been multiple genome-wide association studies performed for gout\citep{tin_target_2019,major_genome-wide_2024,li_replication_2017,nakayama_subtype-specific_2020,kawamura_genome-wide_2019,zhou_global_2022} and even though the most recent genetic study of gout\citep{major_genome-wide_2024} revealed weak evidence of causal role of the clonal hema\-topoiesis of indeterminate potential (CHIP) \textit{DNMT3A} pathway with gout, definitive implication of causal pathways of gouty inflammation is not clear (aside from genetic variants linked to innate immune cytokines that have an obvious causal link)\citep{major_genome-wide_2024}.
+Many genetic studies have linked the genetic signals to other functional information (such as expression quantitative trait loci (eQTL)), but very few have explored causal connections with metabolite levels.
+There have been several direct metabolomics studies that test for observational association of metabolite levels with gout\citep{renaudin_gout_2020,lyu_metabolomics_2022,joshi_prediagnostic_2023}, but these studies have only been able to identify a handful of candidate metabolites, most likely due to several factors including sample size and the onerous number of metabolites being explored (and therefore suffering from limited power owing to multiple testing correction).
+Furthermore, given that these studies are observational, no conclusions regarding causality are able to be drawn.
+\\
 
-Major limitation of this study is the power of the metabolomics studies.
-Considering that colocalisation analysis of the largest gout and largest serum urate GWAS revealed \hl{XXX} colocalised gout loci compared to \hl{XX} loci in current study, it is obvious that the metabolomics data are currently underpowered to detect weaker association signals.
-Nevertheless, we were able to reveal plausible metabolites that were relevant to the biological mechanism of gout, highlighting the fact that metQTL data are extremely useful in narrowing down the causal pathways, even with limited power.
+In this study, we explored the association of metabolite levels with gout by first considering the genetic loci that were identified from the most recent and largest gout GWAS to date, thus narrowing down the search space for candidate metabolites that may be important in gout, and narrowing to metabolites that have some genetic implication in gout.
+We observed an average of 7.12 metabolites genetically colocalizing with each gout locus and an average of 1.56 gout loci colocalizing with each metabolite, highlighting the fact that a gout genetic locus likely affects several metabolites within the same metabolic pathway, but each metabolite is directly affected by one, or at most a few, gout genetic loci (Table \ref{tab:sum_coloc}).
+Since we used multiple metQTL data sets, we were able to overlap the presence of metabolites that consistently colocalized with gout among these data sets and curated 141 candidate metabolites that may have a role in gout (Supplementary table S6).
+Furthermore, by using and comparing with the urine metabolite data set from the GCKD cohort we were able to identify 89 plasma metabolites that may have their concentration affected by metabolic processes, rather than through excretion or reabsorption via the kidney.
+\\
 
-\begin{itemize}
-	\item glutamine metabolism - glutaminolysis and TCA cycle contributing to urate and trained immunity
-\end{itemize}
+In order to identify the most relevant pathways, we first focused on the pathways that included any of the 141 plasma metabolites.
+We then identified 179 genes present in the colocalized loci that directly affected the breakdown or production of metabolites within the pathways that involved the 141 plasma metabolites (Supplementary table S12).
+Surprisingly, among the 179 genes, there were only 17 genes at 9 gout loci that directly metabolized or generated the colocalized metabolites.
+This suggests that genetic loci identified from GWAS rarely include genes that encode proteins that directly affect the metabolite levels.
+The 179 genes that were curated from this approach yielded an additional 63 pathways that were not identified by using the list of all of the genes present in any of the colocalized gout loci (Supplementary table S14).
+For example, estrogen, androgen, and steroid biosynthesis pathways were three of the pathways identified from the analysis.
+Gout is a disease manifested mainly in men\citep{dalbeth_gout_2021,chen-xu_contemporary_2019} and the fact that we identified several pathways that are related to sex hormones and steroid biosynthesis supports these pathways as an underlying biological mechanism that puts men at a higher risk for gout.
+\\
 
+Other pathways of note are the amino acid metabolic processes, in particular the glutamine metabolic process.
+Glutamine has been identified as associated with gout in published metabolomics studies\citep{renaudin_gout_2020,joshi_prediagnostic_2023} and has been reported to be one of the key metabolites in establishing trained immunity via the tricarboxylic acid (TCA) cycle.
+Trained immunity is a phenomenon where innate immune cells (such as natural killer (NK) cells and monocytes) gain an increased and non-spec\-ific immune response by epigenomic remodelling against subsequent infections after being exposed to the initial pathogen\citep{netea_trained_2011,arts_glutaminolysis_2016}, and many of the substrates, for example fumarate, succinate, and citrate, promote (e.g. citrate converted to acetyl-CoA thus providing the acetyl group for acetylation\citep{van_der_heijden_epigenetics_2018}) or inhibit (e.g. fumarate directly inhibits KDM5 family of histone demethylases\citep{arts_immunometabolic_2016,xiao_inhibition_2012}) the epigenetic reprogramming that is essential for training.
+Training by soluble urate has also been experimentally implicated in enhanced monocyte response to MSU crystal\citep{straton_epigenomic_2024}.
+This makes glutamine a strong candidate metabolite involved in the inflammatory process of gout.
+In fact, rs2638315 (chr12:56.81MB-57.01MB) colocalized with glutamine and is in complete LD with the missense variant rs2657879 for \textit {GLS2}\citep{major_genome-wide_2024} (encodes glutaminase 2) which directly metabolizes glutamine (Supplementary table S13), providing an immediate candidate gene that can be tested for functional validation.
+\textit{CAD} (encoding carbamoyl-phosphate synthetase 2) at the rs1260326 (chr2:26.91MB-28.71MB) locus colocalized and directly involves glutamine, and is involved in the first few rate-limiting steps of de novo pyrimidine biosynthesis\citep{li_pyrimidine_2021}.
+However, it is not clear whether the gout risk is mediated through changes in glutamine levels and pyrimidine biosynthesis pathway by \textit{CAD} or by another more well-established gout gene, \textit{GCKR}, in the same locus, or both.
+\\
+
+Mendelian randomization analysis of the 141 plasma metabolites was carried out to establish causal relationship of the metabolites with gout and to identify directionality of association, identifying 29 metabolites with causal evidence for gout (Supplementary table S15 and S16).
+Other than urate, some of the metabolites identified were lysophosphatidylcholines (LPCs), acylcarnitines, amino acid derivatives, and sugar molecules.
+LPCs are phospholipids that can directly bind to toll-like receptors (TLR) 4 and TLR-2/1\citep{carneiro_lysophosphatidylcholine_2013} and, consistent with our MR results, lower plasma level of LPCs have been observed in patients with active rheumatoid arthritis\citep{koh_lipidome_2022,fuchs_phosphatidylcholinelysophosphatidylcholine_2005} and have also been associated with other diseases (such as diabetes, schizophrenia, polycystic ovary syndrome, Alzheimer disease, pulmonary arterial hypertension, aging, asthma, and liver cirrhosis)\citep{knuplez_updated_2020}.
+However, proposing any inflammatory property of LPCs in gout is complicated as they can either activate or inhibit the TLR-mediated signaling pathway depending on the absence or presence of classical TLR ligands, respectively\citep{carneiro_lysophosphatidylcholine_2013,knuplez_updated_2020}.
+TLR-2 and TLR-4 receptors are central in the inflammatory response to MSU crystal where, upon stimulation by an external signal, the receptors induce expression of the proteins involved in formation of the NLRP3 inflammasome, thus mediating the cleavage of pro-IL-1$\beta$ to pro-inflammatory cytokine IL-1$\beta$\citep{major_update_2018}.
+There have been no functional experiments conducted for LPCs in the context of gout and establishing their biological role in gout would be of great interest.
+\\
+
+Acylcarnitines are a group of molecules formed from carnitine and acyl-coenzyme A (acyl-CoA) and their role is to transport fatty acids from the mitochondrion to the cytoplasm for energy production via $\beta$-oxidation.
+In fact, lipid metabolic processes and $\beta$-oxidation (a process where acylcarnitine is sequentially cleaved to generate acetyl-CoA, which is then fed into the TCA cycle for energy production) were identified in the pathway enrichment analysis, supporting the possible role of acylcarnitines in the pathogenesis of gout.
+A previous study by Kolz et al.\citep{kolz_meta-analysis_2009-2} associated DL-carnitine and propionyl-L-carnitine with serum urate via a variant in the \textit{SLC16A9} locus (carnitine efflux transporter), where the variant associated with lower levels of DL-carnitine and propionyl-L-carnitine, and higher serum urate.
+The TCA cycle has a pivotal role in the establishment of innate immunity\citep{van_der_heijden_epigenetics_2018,arts_immunometabolic_2016,arts_glutaminolysis_2016} through epigenomic remodelling, and acylcarnitines, via generation of acetyl-CoA, could be a plausible causal metabolite of gout through trained immunity.
+Innate immune cells are trained by epigenetic modifications such as mono- and tri-methylation of lysine 4 of histone 3 (H3K4me1 and H3K4me3) and acetylation of lysine 27 at histone 3 (H3K27ac) at cytokine genes such as \textit{TNFA}, \textit{IL6}, and \textit{TLR4} for rapid and non-specific response to subsequent infections\citep{saeed_epigenetic_2014,van_der_heijden_epigenetics_2018}.
+In fact, pathway analysis of genes genetically-associated with gout\citep{major_genome-wide_2024} revealed chromatin modifications as one of the significantly enriched pathways and many histone methyltransferase genes were included in the analysis, suggesting an emerging role of histone modifications in gout most likely via train\-ed immunity.
+Other mechanisms such as glycolysis\citep{arts_immunometabolic_2016}, lipid biosynthesis\citep{bekkering_metabolic_2018}, and the pentose phosphate pathway\citep{arts_immunometabolic_2016,arts_glutaminolysis_2016} have been implicated in trained immunity, many of which are closely linked to the TCA cycle metabolites.
+% Previous study by Kolz et al.\citep{kolz_meta-analysis_2009-2} have associated DL-carnitine and propionyl-L-carnitine with serum urate level with a variant in \textit{SLC16A9} locus, where the variant associated with lower levels of DL-carnitine and propionyl-L-carnitine and higher level of serum urate, possibly contributing to trained immunity through altered levels of serum urate\citep{cabau_urate-induced_2020}.
+Furthermore, MSU crystal has been demonstrated to act as a danger-associated molecular pattern (DAMP) and elicits an innate immune response and soluble urate can induce epigenetic reprogramming of innate immune cells and contribute to trained immunity\citep{badii_urate-induced_2021,cabau_urate-induced_2020}.
+Both urate and carnitine derivatives have been causally associated with gout in this study through Mendelian randomization, indicating the possibility of carnitines and urate contributing to trained immunity through the TCA cycle and/or altered levels of serum urate.
+% With that said, there has been little to no direct evidence that link the genetic loci involved in gout with trained immunity other than those involved in urate biosynthesis and transport, and is lacking evidence of involvement of other compounds that may be at play before, during, and after gouty inflammation.
+\\
+
+% 1-arachidonoyl-gpe
+% 1-linoleoyl-gpg
+% 1-oleoyl-gpc - lyso PC (LPC); both pro- and anti-inflammatory compound that binds directly to TLR4 and TLR2-1
+% 1-oleoyl-gpg
+% 1-palmitoleoyl-gpc - lyso PC (LPC); both pro- and anti-inflammatory compound that binds directly to TLR4 and TLR2-1
+% 1-palmitoyl-2-palmitoleoyl-gpc - lyso PC (LPC); both pro- and anti-inflammatory compound that binds directly to TLR4 and TLR2-1
+% 3_5-dichloro-2_6-dihydroxybenzoic-acid - not much info
+% 3-hydroxyhexanoylcarnitine - energy metabolism through beta-oxidation
+% 4-hydroxychlorothalonil - fungicide; one of 40 plasma metabolite biomarker to predict Shannon diversity of gut microbiome (microbiome health)
+% carboxyethyl-gaba
+% eicosanedioate - fatty acid
+% gamma-glutamylglutamine - glutamic acid and glutamine dipeptide
+% gamma-glutamylthreonine - gamma-glutamate and threonine dipeptide
+% glycochenodeoxycholate-glucuronide
+% glycocholenate-sulfate - involved in bile acid structure
+% homoarginine - non-proteinogenic amino acid; relevant in NO production
+% homocitrulline
+% mannonate
+% mannose - six-carbon sugar
+% myo-inositol - sweetener; can be made from glucose via G6P
+% n-acetylalanine - acetylated amino acid
+% n-acetylglycine - acetylated amino acid
+% octadecanedioate - long chain fatty acid; found in potatoes
+% perfluorooctanoate - "forever chemical"
+% r-3-hydroxybutyrylcarnitine - acylcarnitine; beta-oxidation
+% s-3-hydroxybutyrylcarnitine
+% taurolithocholate-3-sulfate - sulfated bile acid
+% tiglylcarnitine - energy metabolism through beta-oxidation
+% urate
+
+There are several limitations to this study.
+First, the inconsistent names of the metabolites in different metabolomics studies have made it difficult to consolidate specific metabolites in all data sets.
+Even though we used HMDB to optimize consistent naming across the data sets, not all metabolites were able to be mapped to the names in HMDB.
+In fact, only about half of the metabolite names in the studies were able to be assigned a consistent name based on HMDB, thus almost half of the metabolites were not assessed for a possible role in gout.
+Other than to encourage future metabolomics studies to use a consistent metabolite naming scheme, this will be a limitation for any study that uses multiple publicly available metabolomics studies.
+A second limitation is the underrepresentation of transporters cataloged in HMDB.
+In our study, we used the protein information present in HMDB to link the genes (and hence gene product) to the metabolite(s) in order to generate a list of genes that directly affected the 141 plasma metabolites for the pathway enrichment analysis.
+Since many of the genes that have the strongest association signals in gout are transporters, the consequence of lower representation of transporters in HMDB was large.
+However, even allowing for the lack of transporter genes, we were able to identify many relevant pathways that involved metabolites that we found to have a causal link to gout from the MR analysis.
+A third limitation is the difficulty of determining whether the causal metabolites are acting solely through urate or through both urate and the inflammatory response to MSU crystal.
+Mendelian randomization of metabolite levels on urate was carried out to address this issue (Supplementary table S17 and S18); however, it is difficult to determine with certainty whether the causal mechanism of the metabolites on gout is truly through urate, due to the fact that the the underlying genetics of urate and gout has considerable overlap and it is very difficult to distinguish the loci that specifically affect urate from those that specifically affect the risk of gout.
+Regardless of whether urate mediates the effect of the metabolite levels on gout risk, the 29 metabolites warrant further functional investigation to determine their roles in the mechanism of gout.
+Lastly, due to the nature of metabolomics studies it is very difficult to gather a large cohort, the sample sizes of the metabolomics studies were relatively small compared to traditional GWAS.
+Since there were less samples, the power to detect association signals was lower and posed a challenge with lead variant selection for an instrumental variable for association with gout.
+We ameliorated this by meta-analyzing the three data sets in order to increase the likelihood of identifying more association signals for the MR analysis.
+In the future, we expect to find more metabolites that associate with gout as larger metabolomics studies are performed.
+\\
+
+Metabolomics is a rapidly expanding field in genetics and the wealth of information provided by these studies is extremely valuable.
+By utilizing the data from metabolomics study, we identified 141 plasma metabolites that genetically colocalized with gout and 29 metabolites that have evidence of a causal relationship with gout, of which acylcarnitines and lysophosphatidylcholines represent strong candidates for future functional studies.
+These metabolites, especially those that showed causal relationship with gout, have potential as biomarkers.
+\\
+
+% TODO: in reference to colocalized loci per metabolite, and metabolites per locus
+% These results suggest that metabolites are genetically controlled by a small number of loci while a genetic locus is able to influence a variety of metabolites, indicating that a genetic locus affects the pathway(s) that the metabolite is part of, rather than the metabolite \textit{per se}.
 
 \bibliographystyle{naturemag}
 % \bibliography{./all_refs.bib}
 \bibliography{/Users/rikutakei/Documents/zotero_library/all_refs.bib}
+
+% \beginsupplement
+
+% \begin{supptable}[p]
+% 	\caption{Table of significant colocalization of 1,391 metabolites from METSIM with gout loci}
+% 	\label{supptab:metsim_coloc}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Table of significant colocalization of 1,400 metabolites from CLSA with gout loci}
+% 	\label{supptab:chen_coloc}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Table of significant colocalization of 1,296 plasma metabolites from GCKD with gout loci}
+% 	\label{supptab:schl_plasma_coloc}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Table of significant colocalization of 1,399 urine metabolites from GCKD with gout loci}
+% 	\label{supptab:schl_urine_coloc}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Table summarising the proportion of metabolite category at gout loci that has more than ten colocalized METSIM metabolite}
+% 	\label{supptab:cat_prop}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{List of 141 plasma metabolites common across METSIM, CLSA, and GCKD data sets}
+% 	\label{supptab:common_met}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{List of 89 metabolites (from 141 common plasma metabolites) that are unique to plasma}
+% 	\label{supptab:plasma_spec_met}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{List of 52 metabolites (from 141 common plasma metabolites) that are present in both plasma and urine}
+% 	\label{supptab:plasma_urine_met}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{DAVID result of the gene list generated from the gout loci that colocalized with 141 plasma metabolites common in all three data sets}
+% 	\label{supptab:david_141}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{DAVID result of the gene list generated from the gout loci that colocalized with 89 plasma-specific metabolites}
+% 	\label{supptab:david_89}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{DAVID result of the gene list generated from the gout loci that colocalized with 52 metabolites identified in both plasma and urine}
+% 	\label{supptab:david_52}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{List of 179 genes directly involved in pathways of 141 plasma metabolites}
+% 	\label{supptab:hmdb_genes}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{List of 17 genes at 9 gout loci that directly affect the colocalized metabolite}
+% 	\label{supptab:hmdb_direct_genes}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{DAVID result of the 179 gene list directly involved in the metabolic pathway of 141 plasma metabolites}
+% 	\label{supptab:david_179}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Significant two-sample Mendelian randomization analysis results of metabolite levels on gout}
+% 	\label{supptab:met_gout_mr}
+% \end{supptable}
+
+% \begin{supptable}
+% \caption{Significant two-sample Mendelian randomization analysis results of gout on metabolite levels}
+% 	\label{supptab:gout_met_mr}
+% \end{supptable}
 
 \end{document}

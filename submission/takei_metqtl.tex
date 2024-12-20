@@ -1,0 +1,635 @@
+%  LaTeX support: latex@mdpi.com
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[gucdd,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+%\documentclass[preprints,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+%
+% For posting an early version of this manuscript as a preprint, you may use
+% "preprints" as the journal. Changing "submit" to "accept" before posting will
+% remove line numbers.
+
+% Below journals will use APA reference format:
+% admsci, behavsci, businesses, econometrics, economies, education, ejihpe,
+% games, humans, ijfs, journalmedia, jrfm, languages, psycholint, publications,
+% tourismhosp, youth
+
+% Below journals will use Chicago reference format:
+% arts, genealogy, histories, humanities, jintelligence, laws, literature, religions, risks, socsci
+
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% accountaudit, acoustics, actuators, addictions, adhesives, admsci, adolescents, aerobiology, aerospace, agriculture, agriengineering, agrochemicals, agronomy, ai, air, algorithms, allergies, alloys, amh, analytica, analytics, anatomia, anesthres, animals, antibiotics, antibodies, antioxidants, applbiosci, appliedchem, appliedmath, appliedphys, applmech, applmicrobiol, applnano, applsci, aquacj, architecture, arm, arthropoda, arts, asc, asi, astronomy, atmosphere, atoms, audiolres, automation, axioms, bacteria, batteries, bdcc, behavsci, beverages, biochem, bioengineering, biologics, biology, biomass, biomechanics, biomed, biomedicines, biomedinformatics, biomimetics, biomolecules, biophysica, biosensors, biosphere, biotech, birds, blockchains, bloods, blsf, brainsci, breath, buildings, businesses, cancers, carbon, cardiogenetics, catalysts, cells, ceramics, challenges, chemengineering, chemistry, chemosensors, chemproc, children, chips, cimb, civileng, cleantechnol, climate, clinbioenerg, clinpract, clockssleep, cmd, cmtr, coasts, coatings, colloids, colorants, commodities, complications, compounds, computation, computers, condensedmatter, conservation, constrmater, cosmetics, covid, crops, cryo, cryptography, crystals, csmf, ctn, curroncol, cyber, dairy, data, ddc, dentistry, dermato, dermatopathology, designs, devices, diabetology, diagnostics, dietetics, digital, disabilities, diseases, diversity, dna, drones, dynamics, earth, ebj, ecm, ecologies, econometrics, economies, education, eesp, ejihpe, electricity, electrochem, electronicmat, electronics, encyclopedia, endocrines, energies, eng, engproc, ent, entomology, entropy, environments, epidemiologia, epigenomes, esa, est, famsci, fermentation, fibers, fintech, fire, fishes, fluids, foods, forecasting, forensicsci, forests, fossstud, foundations, fractalfract, fuels, future, futureinternet, futureparasites, futurepharmacol, futurephys, futuretransp, galaxies, games, gases, gastroent, gastrointestdisord, gastronomy, gels, genealogy, genes, geographies, geohazards, geomatics, geometry, geosciences, geotechnics, geriatrics, glacies, grasses, greenhealth, gucdd, hardware, hazardousmatters, healthcare, hearts, hemato, hematolrep, heritage, higheredu, highthroughput, histories, horticulturae, hospitals, humanities, humans, hydrobiology, hydrogen, hydrology, hygiene, idr, iic, ijerph, ijfs, ijgi, ijmd, ijms, ijns, ijpb, ijt, ijtm, ijtpp, ime, immuno, informatics, information, infrastructures, inorganics, insects, instruments, inventions, iot, j, jal, jcdd, jcm, jcp, jcs, jcto, jdad, jdb, jeta, jfb, jfmk, jimaging, jintelligence, jlpea, jmahp, jmmp, jmms, jmp, jmse, jne, jnt, jof, joitmc, joma, jop, jor, journalmedia, jox, jpbi, jpm, jrfm, jsan, jtaer, jvd, jzbg, kidney, kidneydial, kinasesphosphatases, knowledge, labmed, laboratories, land, languages, laws, life, lights, limnolrev, lipidology, liquids, literature, livers, logics, logistics, lubricants, lymphatics, machines, macromol, magnetism, magnetochemistry, make, marinedrugs, materials, materproc, mathematics, mca, measurements, medicina, medicines, medsci, membranes, merits, metabolites, metals, meteorology, methane, metrics, metrology, micro, microarrays, microbiolres, microelectronics, micromachines, microorganisms, microplastics, microwave, minerals, mining, mmphys, modelling, molbank, molecules, mps, msf, mti, multimedia, muscles, nanoenergyadv, nanomanufacturing, nanomaterials, ncrna, ndt, network, neuroglia, neurolint, neurosci, nitrogen, notspecified, nri, nursrep, nutraceuticals, nutrients, obesities, oceans, ohbm, onco, oncopathology, optics, oral, organics, organoids, osteology, oxygen, parasites, parasitologia, particles, pathogens, pathophysiology, pediatrrep, pets, pharmaceuticals, pharmaceutics, pharmacoepidemiology, pharmacy, philosophies, photochem, photonics, phycology, physchem, physics, physiologia, plants, plasma, platforms, pollutants, polymers, polysaccharides, populations, poultry, powders, preprints, proceedings, processes, prosthesis, proteomes, psf, psych, psychiatryint, psychoactives, psycholint, publications, purification, quantumrep, quaternary, qubs, radiation, reactions, realestate, receptors, recycling, regeneration, religions, remotesensing, reports, reprodmed, resources, rheumato, risks, robotics, rsee, ruminants, safety, sci, scipharm, sclerosis, seeds, sensors, separations, sexes, signals, sinusitis, siuj, skins, smartcities, sna, societies, socsci, software, soilsystems, solar, solids, spectroscj, sports, standards, stats, std, stresses, surfaces, surgeries, suschem, sustainability, symmetry, synbio, systems, tae, targets, taxonomy, technologies, telecom, test, textiles, thalassrep, therapeutics, thermo, timespace, tomography, tourismhosp, toxics, toxins, transplantology, transportation, traumacare, traumas, tropicalmed, universe, urbansci, uro, vaccines, vehicles, venereology, vetsci, vibration, virtualworlds, viruses, vision, waste, water, wem, wevj, wild, wind, women, world, youth, zoonoticdis
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by:
+% abstract, addendum, article, benchmark, book, bookreview, briefcommunication, briefreport, casereport, changes, clinicopathologicalchallenge, comment, commentary, communication, conceptpaper, conferenceproceedings, correction, conferencereport, creative, datadescriptor, discussion, entry, expressionofconcern, extendedabstract, editorial, essay, erratum, fieldguide, hypothesis, interestingimages, letter, meetingreport, monograph, newbookreceived, obituary, opinion, proceedingpaper, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, supfile, systematicreview, technicalnote, viewpoint, guidelines, registeredreport, tutorial,  giantsinurology, urologyaroundtheworld
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. Remove "pdftex" for (1) compiling with LaTeX & dvi2pdf (if eps figures are used) or for (2) compiling with XeLaTeX.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2025}
+\copyrightyear{2024}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ }
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ }
+\datepublished{ }
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Colocalization analysis reveals shared genetic loci contributing to gout and metabolite levels}
+
+% MDPI internal command: Title for citation in the left column
+\TitleCitation{Title}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0002-1243-2535} % Add \orcidA{} behind the author's name
+%\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Riku Takei $^{1}$\orcidA{}, Nicolas A. Sumpter$^{2}$, Megan P. Leask$^{3}$, and Tony R. Merriman$^{1,4}$*}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Riku Takei, Nicholas A. Sumpter, Megan P. Leas, and Tony R. Merriman}
+
+% MDPI internal command: Authors, for citation in the left column, only choose below one of them according to the journal style
+% If this is a Chicago style journal: Lastname, Firstname, Firstname Lastname, and Firstname Lastname.
+% If this is a APA style journal: Lastname, F., Lastname, F., \& Lastname, F.
+% If this is a ACS style journal: Lastname, F.; Lastname, F.; Lastname, F.
+\isAPAStyle{%
+       \AuthorCitation{Lastname, F., Lastname, F., \& Lastname, F.}
+         }{%
+        \isChicagoStyle{%
+        \AuthorCitation{Lastname, Firstname, Firstname Lastname, and Firstname Lastname.}
+        }{
+        \AuthorCitation{Lastname, F.; Lastname, F.; Lastname, F.}
+        }
+}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Division of Clinical Immunology and Rheumatology, University of Alabama at Birmingham, Birmingham, AL, United States; rikutakei@uabmc.edu\\
+$^{2}$ \quad Department of Internal Medicine and Radboud Institute of Molecular Life Science, Radboud University Medical Center, Nijmegen, The Netherlands; nicholas.sumpter@radboudumc.nl\\
+$^{3}$ \quad Department of Physiology, University of Otago, Dunedin, New Zealand; megan.leask@otago.ac.nz\\
+$^{4}$ \quad Department of Microbiology and Immunology, University of Otago, Dunedin, New Zealand; tony.merriman@otago.ac.nz
+}
+
+% Contact information of the corresponding author
+\corres{Correspondence: tony.merriman@otago.ac.nz}
+
+% Current address and/or shared authorship
+% \firstnote{Current address: Affiliation.}  % Current address should not be the same as any items in the Affiliation section.
+% \secondnote{These authors contributed equally to this work.}
+% The commands \thirdnote{} till \eighthnote{} are available for further notes
+
+%\simplesumm{} % Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\)
+\abstract{
+Genetic association studies in gout have identified genetic variants in or near genes involved in the biosynthesis and transport of urate and in immunological pathways.
+However, the causal role of the remaining genetic variants, genes, and pathways in gout is not clear.
+Here, we present the results from a genetic colocalization analysis of gout-associated signals with metabolite quantitative trait loci (metQTL), shedding light on the metabolites that are likely directly affected by genetic variants associated with gout.
+We identified 141 candidate metabolites with evidence of colocalization with at least one gout-associated genetic signal, of which 29 showed evidence of a causal relationship with gout by Mendelian randomization.
+Among the 29 metabolites were lysophosphatidylcholines, which may affect the inflammatory response by binding to the TLR-2/4 receptors, providing plausible candidate metabolites for future studies that link metabolites with inflammatory processes in gout.
+	}
+
+% Keywords
+\keyword{Gout; metabolite; quantitative trait loci; GWAS; Mendelian randomisation}
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences
+%\featuredapplication{Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data
+%\dataset{DOI number or link to the deposited data set if the data set is published separately. If the data set shall be published as a supplement to this paper, this field will be filled by the journal editors. In this case, please submit the data set as a supplement.}
+%\datasetlicense{License under which the data set is made available (CC0, CC-BY, CC-BY-SA, CC-BY-NC, etc.)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Toxins
+%\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+%\encyclopediadef{For entry manuscripts only: please provide a brief overview of the entry title instead of an abstract.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Advances in Respiratory Medicine and Smart Cities
+%\addhighlights{yes}
+%\renewcommand{\addhighlights}{%
+
+%\noindent This is an obligatory section in “Advances in Respiratory Medicine'' and ``Smart Cities”, whose goal is to increase the discoverability and readability of the article via search engines and other scholars. Highlights should not be a copy of the abstract, but a simple text allowing the reader to quickly and simplified find out what the article is about and what can be cited from it. Each of these parts should be devoted up to 2~bullet points.\vspace{3pt}\\
+%\textbf{What are the main findings?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}\vspace{3pt}
+%\textbf{What is the implication of the main finding?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Gout is a common inflammatory arthritis caused by an innate immune response to monosodium urate (MSU) crystals that primarily deposit in joints \cite{dalbeth_gout_2021}.
+Though hyperuricemia (characterized by serum urate concentration $\ge7$mg/dL \citep{dalbeth_gout_2021}) is a prerequisite of gout, an inflammatory response by the NLRP3-inflammasome is required to trigger gouty inflammation \citep{dalbeth_gout_2021,martinon_gout-associated_2006}.
+Genome-wide association studies (GWAS) in gout \citep{tin_target_2019,major_genome-wide_2024,li_replication_2017,nakayama_subtype-specific_2020,kawamura_genome-wide_2019,zhou_global_2022} have revealed many genetic loci, some of which have been implicated in biosynthesis and transport of urate.
+
+Metabolomics is a field that involves the measurement of a large number of metabolites within a group of participants to identify metabolite levels that are associated with a phenotype of interest \citep{johnson_metabolomics_2016,li_metabolomics_2023}.
+When these cohorts also contain genetic information it allows for the association of genetic variants with metabolite levels \citep{chen_genomic_2023,schlosser_genetic_2023,yin_genome-wide_2022} and provide valuable insights into the biological mechanisms by narrowing the search space for causal metabolites that may be causally related.
+% By utilising genetic data, genetic variants that associate with metabolite levels can be identified, thereby directly linking the mode in which genetic variants may play a causal role in certain phenotype through altered metabolite levels.
+% When genetic data is utilized, genetic variants that associate with metabolite levels can be identified, directly linking the role of genetic variants with the phenotype through altered metabolite levels.
+Recently, there have been several GWAS of metabolomic profile that associated genetic variants with metabolite levels: Chen et al. \citep{chen_genomic_2023} studied 1,091 blood metabolites and 309 metabolite ratios in 8,299 individuals from the Canadian Longitudinal Study on Aging (CLSA) cohort, Yin et al. \citep{yin_genome-wide_2022} studied 1,391 metabolites in the plasma of 6,136 male participants from the Metabolic Syndrome in Men (METSIM) study, and Schlosser et al. \citep{schlosser_genetic_2023} studied 1,296 plasma and 1,399 urine metabolites from 5,023 participants from the German Chronic Kidney Disease (GCKD) study.
+These studies provide a wealth of resources to study the effect of genetic variations that influence metabolite concentrations in both plasma and urine, which in turn can be used for insights into the biological mechanism of a phenotype of interest.
+
+In the context of gout, however, only a few metabolomics studies have been done; of note are three studies by Renaudin et al. \citep{renaudin_gout_2020}, Lyu et al. \citep{lyu_metabolomics_2022}, and Joshi and McCormick et al. \citep{joshi_prediagnostic_2023}.
+Renaudin et al. \citep{renaudin_gout_2020} explored the metabolic profile of bone marrow-derived macrophages (BMDMs) and THP-1 cells stimulated with either MSU crystal or calcium pyrophosphate (CPP) crystal and found that the glycolytic pathway, but not oxidative phosphorylation (OXPHOS), has a pivotal role in the IL-1$\beta$-mediated inflammatory process.
+Lyu et al. \citep{lyu_metabolomics_2022} recruited subjects in various stages of gouty arthritis including no gout, hyperuricemia, acute gout, intermittently symptomatic gout, and chronic tophaceous gout, to identify biomarkers associated with progression of gouty inflammation.
+They identified four metabolites (kynurenic acid, N1-Methyl-2-pyridone-5-carboxamide, DL-2-Aminoadipic acid, and 5-hydroxyindole acetic acid) as potential biomarkers for progression of gout.
+More recently, Joshi et al. \citep{joshi_prediagnostic_2023} utilized metabolomics data from the UK Biobank (UKB) cohort to investigate the metabolomic changes that predict incident gout, using Mendelian randomization to identify glycoprotein acetyls (GlycA) as a causal metabolite of incident gout.
+Lower levels of glutamine were associated with increased risk of gout in both Renaudin et al. \citep{renaudin_gout_2020} and Joshi et al. \citep{joshi_prediagnostic_2023}, providing consistent evidence of the role of glutamine in the biological process of gout, possibly through glutaminolysis and trained immunity from the accumulation of fumarate \citep{arts_glutaminolysis_2016}.
+In fact, the most recent genetic study of gout \citep{major_genome-wide_2024} identified that the proline allele of the p.Leu581Pro missense variant of the glutaminase 2 enzyme, which associated with reduced levels of glutamine, also associates with increased risk of gout, supporting the findings from these metabolomics studies that show the important role of glutamine in gout.
+
+Even though these studies provide valuable insights into the biological processes surrounding gout, only a handful of metabolites have been identified and causally associated with gout and progression of gout.
+Since metabolite levels are direct consequences of enzymatic activities, by combining the largest genetic association data of gout \citep{major_genome-wide_2024} and the recent metabolomics studies \citep{chen_genomic_2023,yin_genome-wide_2022,schlosser_genetic_2023} it may be possible to identify metabolites that are also associated with gout-associated genetic variants and consequently identify causal molecular mechanisms of gout.
+Here we conducted colocalization analyses of genetic loci from the most recent GWAS of gout \citep{major_genome-wide_2024} with the plasma and urine metabolite quantitative trait loci (metQTL) data from CLSA \citep{chen_genomic_2023}, METSIM \citep{yin_genome-wide_2022}, and GCKD \citep{schlosser_genetic_2023} studies in order to identify meta\-bolites that may be affected by genetic loci that also affect gout.
+Our analysis included pathway enrichment analysis to highlight pathways that are likely involved with the gout-associated metabolites and also include two-sample Mendelian randomization of the metabolites with gout to assess possible causal relationships of the metabolite levels with gout.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials and Methods}
+
+\noindent
+\textit{Summary data and meta-analysis}\\
+Association summary statistics for 1,400 plasma and plasma metabolite ratios from the CLSA cohort \citep{chen_genomic_2023}, data from 1,391 plasma metabolites from the METSIM study \citep{yin_genome-wide_2022}, and data from 1,296 plasma and 1,399 urine metabolites from the GCKD study \citep{schlosser_genetic_2023} were downloaded from the GWAS Catalog (https://www.ebi.ac.uk/gwas/) and METSIM Metabolomics PheWeb (https://pheweb.org/metsim-metab/).
+Full European gout and urate GWAS summary statistics from Major et al. \citep{major_genome-wide_2024} were used in all of the analyses.
+For the purpose of Mendelian randomisation, fixed-effect meta-analysis was carried out using METAL \citep{willer_metal_2010} on the 141 metabolites that colocalized with gout genetic signals and that were also present in all three metabolite data sets.
+\\
+
+\noindent
+\textit{Colocalization analysis}\\
+The regions for colocalization was restricted to the 276 independent gout loci (lead variant ±500kb window) and only the variants (based on rsID) present in both the gout GWAS and metQTL data were kept.
+Colocalization of gout summary statistics with each of the metQTL association summary statistics was carried out using the `coloc' \citep{giambartolomei_bayesian_2014} R \citep{r_core_team_r_2023} package for the 276 loci.
+Loci that contained less than 100 variants within the ±500kb window of colocalization region were excluded from the analysis.
+A locus was considered to be colocalized if the posterior probability of colocalization (hypothesis 4) was ≥ 0.8.
+\\
+
+\noindent
+\textit{Mapping of metabolite names}\\
+Not all of the metabolite names used in the three metQTL data sets were consistent, so the metabolite names were mapped to those in the Human Metabolome Database \citep{wishart_hmdb_2022} (HMDB version 5.0; downloaded from \url{https://hmdb.ca/downloads}).
+The original metabolite name in each of the data set was matched with the metabolite name (or its synonym) as shown in HMDB.
+If a metabolite name did not match exactly with the HMDB metabolite name, then the name was matched by approximate string matching using the `fedmatch' \citep{cohen_us_2021} package in R.
+In cases where a metabolite name matched with multiple candidate names, the names were checked manually in order to determine the metabolite name that was most likely correct based on chemical structure.
+\\
+
+\noindent
+\textit{Pathway enrichment analysis}\\
+Genes were identified from the gout loci (lead variant ±500kb window) that colocalized with any of the 141 metabolites common to all three metQTL data sets.
+All genes that had their gene region overlapped with the 1Mb region around the lead variant were considered for the pathway analysis.
+The list of genes was used for pathway enrichment analysis using DAVID \citep{huang_systematic_2009,huang_bioinformatics_2009}.
+\\
+
+\noindent
+\textit{Mendelian randomization}\\
+141 metabolites that colocalized with gout and were present in all three metabolite data sets were considered for Mendelian randomization (MR) analysis to determine their causal relationship with gout using the ‘MendelianRandomization’ \citep{yavorska_mendelianrandomization_2017} package in R.
+Lead variants from each of the 141 meta-analyzed metabolite summary statistics were identified using the \texttt{--clump} option in PLINKv1.90 \citep{chang_second-generation_2015}, using the European ancestry samples from the 1000 Genomes Project \citep{auton_global_2015} as the reference for linkage disequilibrium (LD).
+To ensure that the lead variants identified were LD-independent, pairwise LD was calculated for all of the lead variants using PLINK and 1000 Genomes Project European ancestry data, and variants with $r^{2} \ge 0.01$ were removed.
+Any metabolite that had two or less genetically-associated lead variants was not considered for the MR analysis due to technical limitations of the MR methods used.
+Inverse variance-weighted (IVW) and weighted median (WM) methods were used to test for causality of the metabolite with gout (and vice versa), and the MR-Egger method was used to test for pleiotropy by considering the MR-Egger intercept.
+\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+\subsection{Genetic colocalization of gout and metabolite quantitative trait loci}
+Colocalization analysis was first carried out for 1,391 plasma metabolites from the METSIM cohort with 276 independent genetic loci from the European gout GWAS from Major et al. \citep{major_genome-wide_2024} (Supplementary table S1).
+In total, 633 metabolites (45.5\% of tested metabolites) colocalized with at least one gout locus implicating 135 (48.9\%) of the 276 tested loci, highlighting the extent to which gout genetic loci associate with the human metabolome (Table~\ref{tab:sum_coloc}).
+On average, a metabolite colocalized with 1.56 gout loci in plasma, and there were no more than six colocalized loci for any one plasma metabolite.
+Conversely, the average number of metabolites that colocalized with a particular gout locus was 7.12, with the largest number of metabolites (n = 178) colocalizing at the \textit{GCKR} locus (chr2:26.91MB-28.71MB).
+These results suggest that metabolites are genetically controlled by a small number of gout-associated loci while a gout genetic locus is able to influence a variety of metabolites.
+
+We repeated the colocalization analysis in metabolite data sets from two independent cohorts: CLSA and GCKD (Table~\ref{tab:sum_coloc} and Supplementary tables S2-S3).
+Similar to what was observed with the METSIM cohort, 137 (49.6\%) gout loci colocalized with 719 (51.4\%) metabolites from the CLSA cohort (Table~\ref{tab:sum_coloc}; 7.96 metabolites per gout locus).
+In the GCKD cohort, the number of loci colocalized with plasma and urine metabolites were comparable to the number observed in METSIM (136 (49.3\%) and 138 (50.0\%) loci), but with less metabolites compared to the METSIM and CLSA cohorts (482 (37.2\%) plasma and 430 (30.7\%) urine metabolites; 4.74 and 4.17 metabolites per locus, respectively).
+Furthermore, the average number of gout loci that colocalized with a particular metabolite was comparable to that observed in the METSIM cohort (1.55 in the CLSA cohort, 1.36 and 1.34 loci with plasma and urine metabolites in the GCKD cohort, respectively).
+Compared to the METSIM data set, the average number of metabolites that colocalized with a gout locus was slightly larger in the CLSA cohort (7.96 metabolites) and lower in the GCKD cohort (4.74 for plasma and 4.17 for urine metabolites), though this may be due to the lower total number of metabolites that colocalized with the gout loci in the GCKD data set.
+However, the overall trend where there are more colocalized metabolites per locus compared to the number of gout loci that colocalize with a metabolite was consistent across cohorts.
+
+Next, we investigated the types of metabolites that colocalized at each of the gout loci in the METSIM cohort using the ten category descriptions (amino acids, carbohydrate, cofactors and vitamins, energy, lipid, nucleotide, partially characterized, peptide, uncharacterized, and xenobiotics; Supplementary table S5).
+Among the 633 metabolites that colocalized with a gout locus, lipid metabolites were the most common (proportion of metabolites that were lipids = 0.498), followed by uncharacterized metabolites (0.177), and amino acids (0.174).
+These proportions were similar to the overall proportions observed in all METSIM metabolites (n = 1,391 metabolites; Figure~\ref{fig:metsim_category} and Supplementary table S5).
+The proportions from the colocalized metabolites were similar in loci that had >10 colocalized metabolites (23 loci in total), except at the \textit{ABCG2} locus (rs2231142, chr4:86.79MB-90.23MB; Figure~\ref{fig:metsim_category}).
+At the \textit{ABCG2} locus, 70\% (7/10) of the metabolites that colocalized were xenobiotics, likely reflecting the role of ABCG2 as a universal transporter for a variety of drugs, metabolites, and molecules \citep{austin_doyle_multidrug_2003}, including urate (one of the colocalized metabolites at this locus and causal of gout).
+This result was not able to be compared with the CLSA and GCKD cohorts, as the category information was not available in these metabolite datasets.
+
+\subsection{Pathway enrichment analysis of genes at loci that colocalized with metabolite levels}
+To identify plasma metabolites that were colocalized in the three data set (METSIM, CLSA, and GCKD), the metabolite names from each data sets were first mapped to standard metabolite names from the Human Metabolome Database (HMDB; Methods).
+In total, 359 (359/633 = 56.7\%), 326 (326/719 = 45.3\%), and 274 (274/482 = 56.8\%) plasma metabolites from METSIM, CLSA, and GCKD cohorts matched with an HMDB metabolite name, respectively, of which 141 (141/529 = 26.7\%) metabolites were common in all three data sets (Figure~\ref{fig:venn} and Supplementary table S6).
+Of the 141 common plasma metabolites 89 (63.1\%) did not colocalize in urine (out of 218 urine metabolites that had a HMDB metabolite name; Figure~\ref{fig:venn} and Supplementary tables S7 and S8).
+
+To determine the biological pathways represented by the colocalized metabolites, pathway enrichment analysis was carried out using the genes present in the loci that colocalized with 141 plasma metabolites that were common among all three data sets.
+Three sets of protein coding genes (1,489, 1,245, and 908 genes) were identified from the loci that colocalized with all 141 plasma, 89 plasma-specific, or 52 metabolites present in both plasma and urine, respectively (Methods).
+Fifteen, eight, and nine pathways were significantly enriched (FDR-adjusted P $\le 0.05$) with the three gene sets (Supplementary tables S9-S11), respectively.
+Notable pathways identified from plasma-specific genes included glycolysis/gluconeogenesis, pyruvate metabolism, ethanol oxidation, and retinol metabolic process, indicating the genes present in the loci that colocalized specifically with the plasma metabolites may be derived from metabolic processes for energy generation.
+In contrast, pathways that were enriched by the genes present in the loci that colocalized with both plasma and urine mainly included transportation, rather than metabolism, of molecules and compounds, such as urate metabolism and transport, transmembrane and organic anion transport, and bile transport and secretion.
+Many of the plasma-specific and plasma and urine pathways were present in the full list of genes (set 1), though there were some unique pathways that did not appear in the other two sets including the PI3K-AKT signaling pathway, and the insulin resistance and signaling pathway.
+
+Given that not all of the genes will be directly involved with the biological pathways that affect the metabolite level, we focused on identifying genes directly involved with generation of the 141 colocalized plasma metabolites (Figure~\ref{fig:met_assoc_w_loci}).
+We first identified 2,105 pathways that included at least one of the 141 plasma metabolites based on the pathway information in HMDB and extracted 6,288 metabolites from these pathways to ensure that any upstream or downstream metabolites, and therefore the genes that may affect the level of the 141 plasma metabolites, were included.
+Based on the information available in the Human Metabolome Database (HMDB), 3,202 genes encoding enzymes and proteins that directly affected the 6,288 metabolites were extracted and matched back to the loci that colocalized with the 141 plasma metabolites, of which 179 genes were located within the colocalized loci.
+This list of 179 genes is the most relevant set of genes that may affect the 141 plasma metabolite levels directly or indirectly, as the protein products of these genes affect either the colocalized metabolite itself, or affect the metabolite that is up- or downstream to the metabolite of interest in a pathway (Supplementary table S12).
+Of the 179 genes, however, only 17 at 9 gout loci encoded proteins that directly metabolizes or generates the colocalized metabolite; for example, the \textit{GLS2} (encoding glutaminase 2) was identified at the rs58310495 locus (chr12:21.27MB-21.5MB region) which colocalized with L-glutamine (Supplementary table S13).
+Pathway enrichment analysis of the 179 genes identified 71 enriched pathways (FDR-adjusted P $\le 0.05$), of which 63 were not identified in the previous analyses, though some were closely related, such as fatty acid metabolism, metabolism of carbohydrates, and transport of organic anions (Supplementary table S14).
+Among the 63 significant pathways were estrogen metabolic process, androgen biosynthetic process, steroid biosynthesis, mitochondrial fatty acid beta-oxidation, a variety of amino acid metabolic processes (including, but not limited to, glutamine, arginine, proline, valine, leucine, and isoleucine), metabolism of water-soluble vitamins and cofactors.
+
+\subsection{Mendelian randomization of colocalized metabolites with gout and urate}
+Lastly, two-sample Mendelian randomization (MR) analysis was carried out to evaluate causality of the plasma metabolites with gout.
+In order to focus the search for metabolites that are most likely causal for gout, we focused on the 141 plasma metabolites that had metQTL colocalized with gout genetic association signals that were common amongst the three plasma metabolite data sets.
+The summary statistics of all 141 plasma metabolites of the three data sets were meta-analyzed and genetically-independent lead variants genetically associated with the level of each metabolite were identified (Methods).
+Of the 141 plasma metabolites, 126 metabolites had at least three independent lead variants for the MR analysis (Methods).
+29 metabolites (including urate) showed evidence of causality with gout (Bonferroni-corrected P \le\ $3.97\times10^{-4}$) in either the inverse variance-weighted (IVW) or weighted median (WM) methods, of which four metabolites (3,5-dichloro-2,6-dihydroxybenzoic acid, mannose, myo-inositol, and perfluorooctanoate) showed evidence of pleiotropy (MR-Egger intercept P of 0, $2.31\times10^{-14}$, $3.05\times10^{-11}$, and 0, respectively; Supplementary table S15).
+Urate was not pleiotropic with gout (MR-Egger intercept P = 0.32).
+Among the 29 metabolites were lysophosphatidylcholines (LPCs; such as 1-oleoyl-GPC, 1-palmitoleoyl-GPC, and 1-palmitoyl-2-palmitoleoyl-GPC), acylcarnitines (such as (R)-3-hydroxybutyrylcarnitine and 3-hydroxyhexanoylcarnitine), amino acid derivatives (such as gamma-glutamylglutamine, N-acetylalanine, and N-acetylglycine), and sugar molecules (such as mannose and myo-inositol).
+
+The effect estimates of two of the three acylcarnitines ((R)-3-hydroxy\-butyryl\-carnitine and 3-hydroxy\-hexanoyl\-carnitine) were in a positive direction, indicating that the increased level of these metabolites increase the risk of gout.
+In contrast, all three lysophosphatidylcholines (1-oleoyl-GPC, 1-palmitoleoyl-GPC, and 1-palmitoyl-2-palmitoleoyl-GPC) showed negative effect estimates, suggesting a protective role of LPCs in gout.
+To evaluate reverse causality, that is gout having a causal effect on the metabolite level, we reversed the MR analysis to test the causality of gout on the metabolite levels and found urate to be the only metabolite that had evidence of causal relationship with gout (P_{IVW} = $3.38\times10^{-4}$ and P_{WM} = $7.77\times10^{-3}$; Supplementary table S16).
+However, gout also had evidence of pleiotropy with urate (MR-Egger intercept P = $5.67\times10^{-4}$), reflecting the fact that the gout variants affect both urate levels and gout, making it difficult to determine the direction of causality.
+Since urate is a known causal risk factor of gout, we also tested the causality of these 28 metabolites (29 metabolites sans urate) with Major et al. \citep{major_genome-wide_2024} urate GWAS and found 24 of 28 metabolites with evidence of causality (Bonferroni-corrected P \le $1.79\times10^{-3}$; Supplementary table S17), with gamma-glutamylthreonine, glycocholenate-sulfate, N-acetylalanine, and octadecanedioate showing no evidence of causality with urate.
+There were six metabolites that showed evidence of pleiotropy (1-oleoyl-GPC, eicosanedioate, homocitrulline, mannose, myo-inositol, and perfluorooctanoate; Supplementary table S17).
+Testing for reverse causality, there was no evidence of urate having causal effect on the levels of the 28 metabolites (Supplementary table S18), thus 18 metabolites (24 urate-associating metabolites \textminus\ 6 pleiotropic metabolites) may be causal of gout via their effect on urate.
+
+% TODO:
+\begin{table}[h]
+	\hspace{-6.0em}
+	\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+		\hline
+		& Total number of metabolites & Number of unique metabolites colocalized with gout loci & Number of gout loci colocalized with metabolites & Average number of metabolites that colocalized with gout locus\tablefootnote[1]{Note that the average number of metabolites per gout locus includes metabolites colocalized to multiple loci.} & Average number of loci that colocalized with a metabolite\\
+		% & num(met) & num(coloc) & num(loci coloc) & mean(met) & mean(loci)\\
+		\hline
+		METSIM             & 1,391 & 633 & 135 & 7.12 & 1.56 \\
+		CLSA               & 1,400 & 719 & 137 & 7.96 & 1.55 \\
+		GCKD (plasma) & 1,296 & 482 & 136 & 4.74 & 1.36 \\
+		GCKD (urine)  & 1,399 & 430 & 138 & 4.17 & 1.34 \\
+		\hline
+	\end{tabular}
+	\caption{Summary of the number of metabolites and gout genetic loci colocalized with one another}
+	\label{tab:sum_coloc}
+\end{table}
+\\
+
+\begin{figure}[t]
+	\hspace{-30pt}
+	\includegraphics[width=1.2\textwidth]{"./metsim_category_prop.stacked.total.png"}
+	\caption{Proportion of broad categories for all 1,391 METSIM metabolites (left panel), 633 colocalized metabolites (middle panel), and 23 gout loci with at least ten colocalized metabolites (right panel).}
+	\label{fig:metsim_category}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=0.5\textwidth]{"./plasma_metabolite_overlap_venn.bw.pdf"}
+	\includegraphics[width=0.5\textwidth]{"./plasma_urine_metabolite_overlap_venn.bw.pdf"}
+	\caption{Venn diagram showing the overlap of the colocalized plasma metabolites in METSIM, CLSA, and GCKD cohorts (left), and the overlap of 141 common metabolites with colocolised GCKD urine metabolites (right).}
+	\label{fig:venn}
+\end{figure}
+
+\begin{figure}[b!]
+	\centering
+	\includegraphics[width=1.0\textwidth]{"./ppt_image.v2.png"}
+	\caption{Schematic of the identification of metabolites directly affected by genes present in the gout loci that colocalized with metabolite levels.}
+	\label{fig:met_assoc_w_loci}
+\end{figure}
+All figures and tables should be cited in the main text as Figure~\ref{fig1}, Table~\ref{tab1}, etc.
+
+\begin{table}[H]
+%\tablesize{\small}
+\caption{This is a table caption. Tables should be placed in the main text near to the first time they are~cited.\label{tab1}}
+%\isPreprints{\centering}{} % Only used for preprints
+\begin{tabularx}{\textwidth}{CCC}
+\toprule
+\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
+\midrule
+Entry 1		& Data			& Data\\
+Entry 2		& Data			& Data \textsuperscript{1}\\
+\bottomrule
+\end{tabularx}
+
+\noindent{\footnotesize{\textsuperscript{1} Tables may have a footer.}}
+\end{table}
+
+\begin{table}[H]
+\caption{This is a wide table.\label{tab2}}
+%\isPreprints{\centering}{% This command is only used for ``preprints''.
+	\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\isPreprints{\begin{tabularx}{\textwidth}{CCCC}}{% This command is only used for ``preprints''.
+		\begin{tabularx}{\fulllength}{CCCC}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+			\toprule
+			\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}     & \textbf{Title 4}\\
+			\midrule
+\multirow[m]{3}{*}{Entry 1 *}	& Data			& Data			& Data\\
+			  	                   & Data			& Data			& Data\\
+			             	      & Data			& Data			& Data\\
+                   \midrule
+\multirow[m]{3}{*}{Entry 2}    & Data			& Data			& Data\\
+			  	                  & Data			& Data			& Data\\
+			             	     & Data			& Data			& Data\\
+			\bottomrule
+		\end{tabularx}
+%		\isPreprints{}{% This command is only used for ``preprints''.
+	\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+	\noindent{\footnotesize{* Tables may have a footer.}}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+There have been multiple genome-wide association studies performed for gout \citep{tin_target_2019,major_genome-wide_2024,li_replication_2017,nakayama_subtype-specific_2020,kawamura_genome-wide_2019,zhou_global_2022} and even though the most recent genetic study of gout \citep{major_genome-wide_2024} revealed weak evidence of causal role of the clonal hema\-topoiesis of indeterminate potential (CHIP) \textit{DNMT3A} pathway with gout, definitive implication of causal pathways of gouty inflammation is not clear (aside from genetic variants linked to innate immune cytokines that have an obvious causal link) \citep{major_genome-wide_2024}.
+Many genetic studies have linked the genetic signals to other functional information (such as expression quantitative trait loci (eQTL)), but very few have explored causal connections with metabolite levels.
+There have been several direct metabolomics studies that test for observational association of metabolite levels with gout \citep{renaudin_gout_2020,lyu_metabolomics_2022,joshi_prediagnostic_2023}, but these studies have only been able to identify a handful of candidate metabolites, most likely due to several factors including sample size and the onerous number of metabolites being explored (and therefore suffering from limited power owing to multiple testing correction).
+Furthermore, given that these studies are observational, no conclusions regarding causality are able to be drawn.
+
+In this study, we explored the association of metabolite levels with gout by first considering the genetic loci that were identified from the most recent and largest gout GWAS to date, thus narrowing down the search space for candidate metabolites that may be important in gout, and narrowing to metabolites that have some genetic implication in gout.
+We observed an average of 7.12 metabolites genetically colocalizing with each gout locus and an average of 1.56 gout loci colocalizing with each metabolite, highlighting the fact that a gout genetic locus likely affects several metabolites within the same metabolic pathway, but each metabolite is directly affected by one, or at most a few, gout genetic loci (Table~\ref{tab:sum_coloc}).
+Since we used multiple metQTL data sets, we were able to overlap the presence of metabolites that consistently colocalized with gout among these data sets and curated 141 candidate metabolites that may have a role in gout (Supplementary table S6).
+Furthermore, by using and comparing with the urine metabolite data set from the GCKD cohort we were able to identify 89 plasma metabolites that may have their concentration affected by metabolic processes, rather than through excretion or reabsorption via the kidney.
+
+In order to identify the most relevant pathways, we first focused on the pathways that included any of the 141 plasma metabolites.
+We then identified 179 genes present in the colocalized loci that directly affected the breakdown or production of metabolites within the pathways that involved the 141 plasma metabolites (Supplementary table S12).
+Surprisingly, among the 179 genes, there were only 17 genes at 9 gout loci that directly metabolized or generated the colocalized metabolites.
+This suggests that genetic loci identified from GWAS rarely include genes that encode proteins that directly affect the metabolite levels.
+The 179 genes that were curated from this approach yielded an additional 63 pathways that were not identified by using the list of all of the genes present in any of the colocalized gout loci (Supplementary table S14).
+For example, estrogen, androgen, and steroid biosynthesis pathways were three of the pathways identified from the analysis.
+Gout is a disease manifested mainly in men \citep{dalbeth_gout_2021,chen-xu_contemporary_2019} and the fact that we identified several pathways that are related to sex hormones and steroid biosynthesis supports these pathways as an underlying biological mechanism that puts men at a higher risk for gout.
+
+Other pathways of note are the amino acid metabolic processes, in particular the glutamine metabolic process.
+Glutamine has been identified as associated with gout in published metabolomics studies \citep{renaudin_gout_2020,joshi_prediagnostic_2023} and has been reported to be one of the key metabolites in establishing trained immunity via the tricarboxylic acid (TCA) cycle.
+Trained immunity is a phenomenon where innate immune cells (such as natural killer (NK) cells and monocytes) gain an increased and non-spec\-ific immune response by epigenomic remodelling against subsequent infections after being exposed to the initial pathogen \citep{netea_trained_2011,arts_glutaminolysis_2016}, and many of the substrates, for example fumarate, succinate, and citrate, promote (e.g. citrate converted to acetyl-CoA thus providing the acetyl group for acetylation \citep{van_der_heijden_epigenetics_2018}) or inhibit (e.g. fumarate directly inhibits KDM5 family of histone demethylases \citep{arts_immunometabolic_2016,xiao_inhibition_2012}) the epigenetic reprogramming that is essential for training.
+Training by soluble urate has also been experimentally implicated in enhanced monocyte response to MSU crystal \citep{straton_epigenomic_2024}.
+This makes glutamine a strong candidate metabolite involved in the inflammatory process of gout.
+In fact, rs2638315 (chr12:56.81MB-57.01MB) colocalized with glutamine and is in complete LD with the missense variant rs2657879 for \textit {GLS2} \citep{major_genome-wide_2024} (encodes glutaminase 2) which directly metabolizes glutamine (Supplementary table S13), providing an immediate candidate gene that can be tested for functional validation.
+\textit{CAD} (encoding carbamoyl-phosphate synthetase 2) at the rs1260326 (chr2:26.91MB-28.71MB) locus colocalized and directly involves glutamine, and is involved in the first few rate-limiting steps of de novo pyrimidine biosynthesis \citep{li_pyrimidine_2021}.
+However, it is not clear whether the gout risk is mediated through changes in glutamine levels and pyrimidine biosynthesis pathway by \textit{CAD} or by another more well-established gout gene, \textit{GCKR}, in the same locus, or both.
+
+Mendelian randomization analysis of the 141 plasma metabolites was carried out to establish causal relationship of the metabolites with gout and to identify directionality of association, identifying 29 metabolites with causal evidence for gout (Supplementary table S15 and S16).
+Other than urate, some of the metabolites identified were lysophosphatidylcholines (LPCs), acylcarnitines, amino acid derivatives, and sugar molecules.
+LPCs are phospholipids that can directly bind to toll-like receptors (TLR) 4 and TLR-2/1 \citep{carneiro_lysophosphatidylcholine_2013} and, consistent with our MR results, lower plasma level of LPCs have been observed in patients with active rheumatoid arthritis \citep{koh_lipidome_2022,fuchs_phosphatidylcholinelysophosphatidylcholine_2005} and have also been associated with other diseases (such as diabetes, schizophrenia, polycystic ovary syndrome, Alzheimer disease, pulmonary arterial hypertension, aging, asthma, and liver cirrhosis) \citep{knuplez_updated_2020}.
+However, proposing any inflammatory property of LPCs in gout is complicated as they can either activate or inhibit the TLR-mediated signaling pathway depending on the absence or presence of classical TLR ligands, respectively \citep{carneiro_lysophosphatidylcholine_2013,knuplez_updated_2020}.
+TLR-2 and TLR-4 receptors are central in the inflammatory response to MSU crystal where, upon stimulation by an external signal, the receptors induce expression of the proteins involved in formation of the NLRP3 inflammasome, thus mediating the cleavage of pro-IL-1$\beta$ to pro-inflammatory cytokine IL-1$\beta$ \citep{major_update_2018}.
+There have been no functional experiments conducted for LPCs in the context of gout and establishing their biological role in gout would be of great interest.
+
+Acylcarnitines are a group of molecules formed from carnitine and acyl-coenzyme A (acyl-CoA) and their role is to transport fatty acids from the mitochondrion to the cytoplasm for energy production via $\beta$-oxidation.
+In fact, lipid metabolic processes and $\beta$-oxidation (a process where acylcarnitine is sequentially cleaved to generate acetyl-CoA, which is then fed into the TCA cycle for energy production) were identified in the pathway enrichment analysis, supporting the possible role of acylcarnitines in the pathogenesis of gout.
+A previous study by Kolz et al. \citep{kolz_meta-analysis_2009-2} associated DL-carnitine and propionyl-L-carnitine with serum urate via a variant in the \textit{SLC16A9} locus (carnitine efflux transporter), where the variant associated with lower levels of DL-carnitine and propionyl-L-carnitine, and higher serum urate.
+The TCA cycle has a pivotal role in the establishment of innate immunity \citep{van_der_heijden_epigenetics_2018,arts_immunometabolic_2016,arts_glutaminolysis_2016} through epigenomic remodelling, and acylcarnitines, via generation of acetyl-CoA, could be a plausible causal metabolite of gout through trained immunity.
+Innate immune cells are trained by epigenetic modifications such as mono- and tri-methylation of lysine 4 of histone 3 (H3K4me1 and H3K4me3) and acetylation of lysine 27 at histone 3 (H3K27ac) at cytokine genes such as \textit{TNFA}, \textit{IL6}, and \textit{TLR4} for rapid and non-specific response to subsequent infections \citep{saeed_epigenetic_2014,van_der_heijden_epigenetics_2018}.
+In fact, pathway analysis of genes genetically-associated with gout \citep{major_genome-wide_2024} revealed chromatin modifications as one of the significantly enriched pathways and many histone methyltransferase genes were included in the analysis, suggesting an emerging role of histone modifications in gout most likely via train\-ed immunity.
+Other mechanisms such as glycolysis \citep{arts_immunometabolic_2016}, lipid biosynthesis \citep{bekkering_metabolic_2018}, and the pentose phosphate pathway \citep{arts_immunometabolic_2016,arts_glutaminolysis_2016} have been implicated in trained immunity, many of which are closely linked to the TCA cycle metabolites.
+Furthermore, MSU crystal has been demonstrated to act as a danger-associated molecular pattern (DAMP) and elicits an innate immune response and soluble urate can induce epigenetic reprogramming of innate immune cells and contribute to trained immunity \citep{badii_urate-induced_2021,cabau_urate-induced_2020}.
+Both urate and carnitine derivatives have been causally associated with gout in this study through Mendelian randomization, indicating the possibility of carnitines and urate contributing to trained immunity through the TCA cycle and/or altered levels of serum urate.
+
+There are several limitations to this study.
+First, the inconsistent names of the metabolites in different metabolomics studies have made it difficult to consolidate specific metabolites in all data sets.
+Even though we used HMDB to optimize consistent naming across the data sets, not all metabolites were able to be mapped to the names in HMDB.
+In fact, only about half of the metabolite names in the studies were able to be assigned a consistent name based on HMDB, thus almost half of the metabolites were not assessed for a possible role in gout.
+Other than to encourage future metabolomics studies to use a consistent metabolite naming scheme, this will be a limitation for any study that uses multiple publicly available metabolomics studies.
+A second limitation is the underrepresentation of transporters cataloged in HMDB.
+In our study, we used the protein information present in HMDB to link the genes (and hence gene product) to the metabolite(s) in order to generate a list of genes that directly affected the 141 plasma metabolites for the pathway enrichment analysis.
+Since many of the genes that have the strongest association signals in gout are transporters, the consequence of lower representation of transporters in HMDB was large.
+However, even allowing for the lack of transporter genes, we were able to identify many relevant pathways that involved metabolites that we found to have a causal link to gout from the MR analysis.
+A third limitation is the difficulty of determining whether the causal metabolites are acting solely through urate or through both urate and the inflammatory response to MSU crystal.
+Mendelian randomization of metabolite levels on urate was carried out to address this issue (Supplementary table S17 and S18); however, it is difficult to determine with certainty whether the causal mechanism of the metabolites on gout is truly through urate, due to the fact that the the underlying genetics of urate and gout has considerable overlap and it is very difficult to distinguish the loci that specifically affect urate from those that specifically affect the risk of gout.
+Regardless of whether urate mediates the effect of the metabolite levels on gout risk, the 29 metabolites warrant further functional investigation to determine their roles in the mechanism of gout.
+Lastly, due to the nature of metabolomics studies it is very difficult to gather a large cohort, the sample sizes of the metabolomics studies were relatively small compared to traditional GWAS.
+Since there were less samples, the power to detect association signals was lower and posed a challenge with lead variant selection for an instrumental variable for association with gout.
+We ameliorated this by meta-analyzing the three data sets in order to increase the likelihood of identifying more association signals for the MR analysis.
+In the future, we expect to find more metabolites that associate with gout as larger metabolomics studies are performed.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+Metabolomics is a rapidly expanding field in genetics and the wealth of information provided by these studies is extremely valuable.
+By utilizing the data from metabolomics study, we identified 141 plasma metabolites that genetically colocalized with gout and 29 metabolites that have evidence of a causal relationship with gout, of which acylcarnitines and lysophosphatidylcholines represent strong candidates for future functional studies.
+These metabolites, especially those that showed causal relationship with gout, have potential as biomarkers.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
+
+% Only for journal Methods and Protocols:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
+
+% Only used for preprtints:
+% \supplementary{The following supporting information can be downloaded at the website of this paper posted on \href{https://www.preprints.org/}{Preprints.org}.}
+
+% Only for journal Hardware:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.\vspace{6pt}\\
+%\begin{tabularx}{\textwidth}{lll}
+%\toprule
+%\textbf{Name} & \textbf{Type} & \textbf{Description} \\
+%\midrule
+%S1 & Python script (.py) & Script of python source code used in XX \\
+%S2 & Text (.txt) & Script of modelling code used to make Figure X \\
+%S3 & Text (.txt) & Raw data from experiment X \\
+%S4 & Video (.mp4) & Video demonstrating the hardware in use \\
+%... & ... & ... \\
+%\bottomrule
+%\end{tabularx}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authorcontributions{Conceptualization, R.T. and M.L.; methodology, R.T.; software, R.T.; validation, R.T.; formal analysis, R.T.; investigation, R.T.; resources, R.T., M.L., and T.M.; data curation, R.T.; writing---original draft preparation, R.T.; writing---review and editing, R.T., N.S., M.L., and T.M.; visualization, R.T.; supervision, T.M.; project administration, R.T. and T.M.; funding acquisition, T.M. All authors have read and agreed to the published version of the manuscript.}
+
+\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+
+\institutionalreview{In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.}
+
+\informedconsent{Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
+
+Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.}
+
+\dataavailability{We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.}
+
+% Only for journal Drones
+%\durcstatement{Current research is limited to the [please insert a specific academic field, e.g., XXX], which is beneficial [share benefits and/or primary use] and does not pose a threat to public health or national security. Authors acknowledge the dual-use potential of the research involving xxx and confirm that all necessary precautions have been taken to prevent potential misuse. As an ethical responsibility, authors strictly adhere to relevant national and international laws about DURC. Authors advocate for responsible deployment, ethical considerations, regulatory compliance, and transparent reporting to mitigate misuse risks and foster beneficial outcomes.}
+
+% Only for journal Nursing Reports
+%\publicinvolvement{Please describe how the public (patients, consumers, carers) were involved in the research. Consider reporting against the GRIPP2 (Guidance for Reporting Involvement of Patients and the Public) checklist. If the public were not involved in any aspect of the research add: ``No public involvement in any aspect of this research''.}
+%
+%% Only for journal Nursing Reports
+%\guidelinesstandards{Please add a statement indicating which reporting guideline was used when drafting the report. For example, ``This manuscript was drafted against the XXX (the full name of reporting guidelines and citation) for XXX (type of research) research''. A complete list of reporting guidelines can be accessed via the equator network: \url{https://www.equator-network.org/}.}
+%
+%% Only for journal Nursing Reports
+%\useofartificialintelligence{Please describe in detail any and all uses of artificial intelligence (AI) or AI-assisted tools used in the preparation of the manuscript. This may include, but is not limited to, language translation, language editing and grammar, or generating text. Alternatively, please state that “AI or AI-assisted tools were not used in drafting any aspect of this manuscript”.}
+
+\acknowledgments{}
+
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+%% Only for journal Encyclopedia
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+
+\abbreviations{Abbreviations}{
+The following abbreviations are used in this manuscript:\\
+
+\noindent
+\begin{tabular}{@{}ll}
+CLSA & Canadian Longitudinal Study on Aging\\
+FDR & False-Discovery Rate\\
+GCKD & German Chronic Kidney Disease\\
+GWAS & Genome-Wide Association Study\\
+HMDB & The Human Metabolome Database\\
+LD & Linkage Disequilibrium\\
+METSIM & Metabolic Syndrome in Men\\
+MSU & Monosodium Urate\\
+\end{tabular}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+% \appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+%\appendixstart
+%\appendix
+%\section[\appendixname~\thesection]{}
+%\subsection[\appendixname~\thesubsection]{}
+%The appendix is an optional section that can contain details and data supplemental to the main text---for example, explanations of experimental details that would disrupt the flow of the main text but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data are shown in the main text can be added here if brief, or as Supplementary Data. Mathematical proofs of results not central to the paper can be added as an appendix.
+
+%\begin{table}[H]
+%\caption{This is a table caption.\label{tab5}}
+%%\newcolumntype{C}{>{\centering\arraybackslash}X}
+%\begin{tabularx}{\textwidth}{CCC}
+%\toprule
+%\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
+%\midrule
+%Entry 1		& Data			& Data\\
+%Entry 2		& Data			& Data\\
+%\bottomrule
+%\end{tabularx}
+%\end{table}
+
+%\section[\appendixname~\thesection]{}
+%All appendix sections must be cited in the main text. In the appendices, Figures, Tables, etc. should be labeled, starting with ``A''---e.g., Figure A1, Figure A2, etc.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+\reftitle{References}
+
+% Please provide either the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/) or the full name of the journal.
+% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here.
+
+%=====================================
+% References, variant A: external bibliography
+%=====================================
+% \bibliography{your_external_BibTeX_file}
+\bibliography{./all_refs.bib}
+
+%=====================================
+% References, variant B: internal bibliography
+%=====================================
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+% For the MDPI journals use author-date citation, please follow the formatting guidelines on http://www.mdpi.com/authors/references
+% To cite two works by the same author:  \citeauthor{ref-journal-1a} ( \citeyear{ref-journal-1a},  \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
+% To cite two works by the same author with specific pages:  \citeauthor{ref-journal-3a} ( \citeyear{ref-journal-3a}, p. 328;  \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\end{document}
+

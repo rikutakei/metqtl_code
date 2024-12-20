@@ -7,7 +7,7 @@ library(UpSetR)
 library(VennDiagram)
 library(RColorBrewer)
 
-# setwd('..')
+setwd('..')
 
 source('src/paper_stats/functions.R')
 
@@ -17,10 +17,32 @@ chen = read.table('results/coloc_res/chen/merged_res/coloc_merged.pp0.8.txt', se
 schl_plasma = read.table('results/coloc_res/schlosser/plasma/merged_res/coloc_merged.pp0.8.plasma.txt', sep = '\t', header = T, quote = '')
 schl_urine = read.table('results/coloc_res/schlosser/urine/merged_res/coloc_merged.pp0.8.urine.txt', sep = '\t', header = T, quote = '')
 
+# Only focus on full cohort results (276 loci):
+metsim = metsim %>% filter(cohort.locus == 'full')
+chen = chen %>% filter(cohort.locus == 'full')
+schl_plasma = schl_plasma %>% filter(cohort.locus == 'full')
+schl_urine = schl_urine %>% filter(cohort.locus == 'full')
+
+metsim %>% group_by(locus) %>% summarise(count = n()) %>% arrange(desc(count))
+
 length(unique(metsim$compound))
 length(unique(chen$compound))
 length(unique(schl_plasma$compound))
 length(unique(schl_urine$compound))
+
+# Add chr/pos info:
+loci = read.table('data/gwas/indep_snps_from_paper.eur_only.txt', sep = '\t', header = T, stringsAsFactors = F)
+loci = loci %>% select(SNP:pos) %>% distinct
+
+metsim = left_join(metsim, loci)
+chen = left_join(chen, loci)
+schl_plasma = left_join(schl_plasma, loci)
+schl_urine = left_join(schl_urine, loci)
+
+write.table(metsim, 'results/supp_table/metsim_coloc.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(chen, 'results/supp_table/chen_coloc.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(schl_plasma, 'results/supp_table/schl_plasma_coloc.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(schl_urine, 'results/supp_table/schl_urine_coloc.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
 ################################################################################
 # Take a look at per-locus colocalisation results
@@ -48,6 +70,48 @@ mean(chen_perloc$count)
 mean(schl_plasma_perloc$count)
 mean(schl_urine_perloc$count)
 
+# What is the breakdown of the categories of all METSIM metabolites:
+all_metsim = read.table('data/metqtl_pheno/metsim_phenotypes.tsv', sep = '\t', header = T, stringsAsFactors = F)
+all_cat = all_metsim %>% group_by(category) %>% summarize(count = n()) %>% mutate(prop = count / sum(count))
+all_cat = add_color(all_cat)
+
+all_cat = all_cat %>% mutate(category = gsub('_', ' ', category), locus = 'All METSIM metabolites (n = 1,391)', broad = 'All METSIM metabolites (n = 1,391)')
+
+all_cat_plot = all_cat %>% ggplot(aes(x = broad, y = prop, fill = category))
+all_cat_plot = all_cat_plot +
+  scale_fill_manual(values = unique(all_cat$color), labels = sort(unique(all_cat$category)), name = 'Category') +
+  theme_bw() +
+  theme(axis.text.x = element_text(hjust = 1, angle = 90, vjust = 0.5)) +
+  labs(x = '', y = 'Proportion of colocalised metabolite categories at each locus') +
+  geom_col()
+
+# all_cat_plot
+
+write.table(all_cat, 'results/supp_table/metsim_per_category_summary.total.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+
+# What is the breakdown of the categories of 633 colocalised metabolites in
+# METSIM:
+cat_sub = metsim %>% distinct(compound, category)
+cat_sub = cat_sub %>% group_by(category) %>% summarize(count = n()) %>% mutate(prop = count / sum(count))
+cat_sub = add_color(cat_sub)
+
+cat_sub = cat_sub %>% mutate(category = gsub('_', ' ', category), locus = 'Colocalized metabolites (n = 633)', broad = 'colocalized metabolites (n = 633)')
+
+cat_plot = cat_sub %>% ggplot(aes(x = broad, y = prop, fill = category))
+cat_plot = cat_plot +
+  scale_fill_manual(values = unique(cat_sub$color), labels = sort(unique(cat_sub$category)), name = 'Category') +
+  theme_bw() +
+  theme(axis.text.x = element_text(hjust = 1, angle = 90, vjust = 0.5)) +
+  labs(x = '', y = 'Proportion of colocalised metabolite categories at each locus') +
+  geom_col()
+
+# cat_plot
+
+write.table(cat_sub, 'results/supp_table/metsim_per_category_summary.633colocalized.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+
+# NOTE: Below analysis may or may not be included in the final version (Nov 20
+# 2024)
+#
 # For the METSIM dataset, plot the proportion of the metabolite categories
 # influenced by the loci:
 #
@@ -57,14 +121,54 @@ mean(schl_urine_perloc$count)
 # plot_metsim = metsim_perloc %>% filter(count >= 5) %>% pivot_longer(cols = Amino_Acid:last_col(), names_to = 'category', values_to = 'met_count') %>% mutate(prop = met_count / count)
 plot_metsim = metsim_perloc %>% filter(count >= 10) %>% pivot_longer(cols = Amino_Acid:last_col(), names_to = 'category', values_to = 'met_count') %>% mutate(prop = met_count / count)
 
-# plot_metsim %>% group_by(category) %>% summarize(mean_prop = mean(prop), max_prop = max(prop), min_prop = min(prop), sd_prop = sd(prop)) %>% arrange(desc(mean_prop))
+per_cat_summary = plot_metsim %>% group_by(category) %>% summarize(count = sum(met_count), mean_prop = mean(prop), max_prop = max(prop), min_prop = min(prop), sd_prop = sd(prop)) %>% arrange(desc(mean_prop))
+per_cat_summary
+write.table(per_cat_summary, 'results/supp_table/metsim_per_category_summary.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 # plot_metsim %>% filter(SNP == 'rs2231142', prop > 0) %>% as.data.frame
 # plot_metsim %>% filter(prop > 0, category == 'Xenobiotics') %>% as.data.frame
 
 plot_metsim = add_color(plot_metsim)
 
+# Rename the locus for plotting:
+plot_metsim = plot_metsim %>% separate(locus, sep = '_', into = c('chr', 'start', 'end'), remove = F) %>% unite(col = 'range', start, end, sep = '-', remove = F) %>% arrange(str_sort(locus, numeric = T))
+
+loci_gene = read.table('src/paper_stats/loci_genes.txt', sep = '\t', header = T, stringsAsFactors = F)
+loci_gene = loci_gene %>% select(-locus.plot)
+
+plot_metsim = left_join(plot_metsim, loci_gene, by = 'SNP')
+plot_metsim = plot_metsim %>% unite(col = 'locus.plot', chr, range, sep = ':', remove = F) %>% mutate(locus.plot = paste(SNP, ' / ', genes, ' (', locus.plot, ')', sep = '')) 
+
+plot_level = plot_metsim %>% distinct(locus, locus.plot) %>% as.data.frame
+rownames(plot_level) = plot_level$locus
+plot_level = plot_level[str_sort(plot_level$locus, numeric = T),]
+plot_level = plot_level$locus.plot
+
+plot_metsim$locus.plot = factor(plot_metsim$locus.plot, levels = plot_level)
+plot_metsim$locus = plot_metsim$locus.plot
+
 plot_perloc(plot_metsim, facet = F, outname = 'results/plots/coloc/metsim_category_prop.stacked.png')
 plot_perloc(plot_metsim, facet = T, outname = 'results/plots/coloc/metsim_category_prop.facet.png')
+
+# Combine the overal category data with the per-locus data:
+overall = plot_metsim %>% mutate(broad = 'Per-locus') %>% select(colnames(cat_sub))
+overall = rbind(overall, cat_sub)
+overall = rbind(overall, all_cat)
+overall = overall %>% mutate(category = gsub('_', ' ', category))
+
+overall_plot = overall %>% ggplot(aes(x = locus, y = prop, fill = category)) +
+  facet_grid( ~ broad, scales = 'free', space = 'free') +
+  scale_fill_manual(values = unique(overall$color), labels = sort(unique(overall$category)), name = 'Category') +
+  theme_bw() +
+  theme(axis.text.x = element_text(hjust = 1, angle = 90, vjust = 0.5), strip.background = element_blank(), strip.text.x = element_blank()) +
+  labs(x = '', y = 'Proportion of colocalised metabolite categories at each locus') +
+  geom_col()
+
+overall_plot
+
+ggsave('results/plots/coloc/metsim_category_prop.stacked.total.png', width = 10, height = 8)
+
+# GLS2 locus also seems suspicious in terms of metabolite category ratio:
+# plot_metsim %>% filter(SNP == "rs2638315") %>% as.data.frame
 
 ##############################################################################
 # TODO: for the proportion of the categories, is this what you would expect to
@@ -185,7 +289,7 @@ length(unique(overlap_schl$metabolite.common))
 overlap_list = list(unique(overlap_metsim$metabolite.common), unique(overlap_chen$metabolite.common), unique(overlap_schl$metabolite.common))
 
 venn.diagram(x = overlap_list,
-             category.names = c('METSIM', 'Chen', 'Schlosser'),
+             category.names = c('METSIM', 'CLSA', 'GCKD'),
              filename = 'results/plots/venn/plasma_metabolite_overlap_venn.png',
              output = T,
              # Circles
@@ -206,7 +310,7 @@ venn.diagram(x = overlap_list,
 )
 
 venn.diagram(x = overlap_list,
-             category.names = c('METSIM', 'Chen', 'Schlosser'),
+             category.names = c('METSIM', 'CLSA', 'GCKD'),
              filename = 'results/plots/venn/plasma_metabolite_overlap_venn.bw.png',
              output = T,
              # Numbers
@@ -222,29 +326,49 @@ venn.diagram(x = overlap_list,
              rotation = 1
 )
 
-# Save the list of 144 metabolites common in all three data sets:
+# Save the list of 141 metabolites common in all three data sets:
 all_common = table(unlist(overlap_list))
 all_common = names(all_common)[which(all_common == 3)]
-writeLines(sort(all_common), 'results/met_overlap/all_plasma_overlap.txt')
 
-# Look at the overlap between 144 plasma metabolites in urine
+tmp_metsim = overlap_metsim %>% select(metabolite.common, SNP, locus)
+tmp_chen = overlap_chen %>% select(metabolite.common, SNP, locus)
+tmp_schl = overlap_schl %>% select(metabolite.common, SNP, locus)
+tmp_all_common = rbind(tmp_metsim, tmp_chen)
+tmp_all_common = rbind(tmp_all_common, tmp_schl)
+
+tmp_all_common = tmp_all_common %>% filter(metabolite.common %in% all_common) %>% group_by(metabolite.common) %>% summarise(coloc_loci = paste(unique(locus), collapse = '; '), coloc_snp = paste(unique(SNP), collapse = '; '))
+
+write.table(tmp_all_common, 'results/met_overlap/all_plasma_overlap.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+
+# Look at the overlap between 141 plasma metabolites in urine
 #
 # First check how many urine metabolites matched with HMDB (merge with master
 # phenostring, then count unique metabolites):
 overlap_schl_urine = left_join(schl_urine_hmdb, master_phenostring, by = 'metabolite.hmdb', suffix = c('', '.common'))
 
-# 226 urine metabolites matched with HMDB
+# 218 urine metabolites matched with HMDB
 length(unique(overlap_schl_urine$metabolite.common))
 
-# Now see how many overlapped with the 144 plasma metabolites
-# (Out of 226 urine metabolites, 53 overlapped with plasma metabolites)
+# Now see how many overlapped with the 141 plasma metabolites
+# (Out of 218 urine metabolites, 52 overlapped with plasma metabolites)
 plasma_urine_overlap = overlap_schl_urine %>% filter(metabolite.common %in% all_common) %>% pull(metabolite.common) %>% unique
 length(plasma_urine_overlap)
 
-# Save the list of 53 common metabolites between plasma and urine:
-writeLines(sort(plasma_urine_overlap), 'results/met_overlap/plasma_urine_overlap.txt')
+tmp_plasma_urine_overlap = tmp_all_common %>% filter(metabolite.common %in% plasma_urine_overlap)
 
-# Generate a Venn diagram of the 144 plasma vs 226 urine metabolites:
+# Save the list of 52 common metabolites between plasma and urine:
+write.table(tmp_plasma_urine_overlap, 'results/met_overlap/plasma_urine_overlap.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+
+# Save the list of 89 metabolites unique in plasma:
+unique_plasma = all_common[!(all_common %in% plasma_urine_overlap)]
+length(unique_plasma)
+
+tmp_unique_plasma = tmp_all_common %>% filter(metabolite.common %in% unique_plasma)
+
+write.table(tmp_unique_plasma, 'results/met_overlap/unique_plasma.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+write.table(tmp_unique_plasma, 'results/supp_table/unique_plasma.txt', sep = '\t', col.names = T, row.names = F, quote = F)
+
+# Generate a Venn diagram of the 141 plasma vs 218 urine metabolites:
 urine_plasma_overlap = list(unique(all_common), unique(overlap_schl_urine$metabolite.common))
 
 venn.diagram(x = urine_plasma_overlap,
@@ -284,13 +408,15 @@ venn.diagram(x = urine_plasma_overlap,
 )
 
 ################################################################################
-# List up all the loci/SNPs involved with the 144 metabolites for pathway
+# List up all the loci/SNPs involved with the 141 metabolites for pathway
 # enrichment analysis
 metsim_snp = overlap_metsim %>% filter(metabolite.common %in% all_common) %>% pull(SNP) %>% unique
 chen_snp = overlap_chen %>% filter(metabolite.common %in% all_common) %>% pull(SNP) %>% unique
 schl_snp = overlap_schl %>% filter(metabolite.common %in% all_common) %>% pull(SNP) %>% unique
 
 all_snp = unique(c(metsim_snp, chen_snp, schl_snp))
+
+length(all_snp)
 
 writeLines(all_snp, 'results/met_overlap/common_plasma_metabolite_snps.txt')
 
@@ -302,6 +428,8 @@ schl_snp = overlap_schl %>% filter(metabolite.common %in% plasma_met) %>% pull(S
 
 plasma_only = unique(c(metsim_snp, chen_snp, schl_snp))
 
+length(plasma_only)
+
 writeLines(plasma_only, 'results/met_overlap/plasma_only_snps.txt')
 
 # And those that overlapped with urine
@@ -311,6 +439,8 @@ schl_snp = overlap_schl %>% filter(metabolite.common %in% plasma_urine_overlap) 
 schl_urine_snp = overlap_schl %>% filter(metabolite.common %in% plasma_urine_overlap) %>% pull(SNP) %>% unique
 
 plasma_urine_snp = unique(c(metsim_snp, chen_snp, schl_snp, schl_urine_snp))
+
+length(plasma_urine_snp)
 
 writeLines(plasma_urine_snp, 'results/met_overlap/plasma_urine_snps.txt')
 
@@ -355,6 +485,7 @@ metsim_metcomp = metsim %>% distinct(compound, category) %>% left_join(metsim_pe
 
 ################################################################################
 
+# OLD STUFF (I think...):
 # How many of the metabolites from METSIM also colocalised in Schlosser plasma
 # data set?
 

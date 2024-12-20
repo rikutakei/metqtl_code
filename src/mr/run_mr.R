@@ -4,7 +4,7 @@ library(tidyr)
 library(vroom)
 library(MendelianRandomization)
 
-# setwd('..')
+setwd('..')
 
 source('src/mr/mr_functions.R')
 

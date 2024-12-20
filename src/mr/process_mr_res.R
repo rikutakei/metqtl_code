@@ -3,7 +3,7 @@ library(stringr)
 library(ggplot2)
 library(tidyr)
 
-# setwd('..')
+# setwd('../..')
 
 # Load in results
 met = read.table('results/mr_results/met2gout.mr_res.txt', sep = '\t', header = T, stringsAsFactors = F)

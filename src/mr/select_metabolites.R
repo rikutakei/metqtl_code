@@ -1,16 +1,14 @@
-# Quick script to narrow down which metabolites to use for the MR analysis
+# Get all 141 plasma metabolites for MR analysis
 #
-# - Take the 144 plasma metabolites
-# - Group by metabolites and count up loci
-# - Use/select metabolites that have X colocalised loci or more
+# These metabolites will be meta-analysed together first before running MR
 
 library(dplyr)
 library(tidyr)
 library(purrr)
 
-setwd('..')
+setwd('../..')
 
-# Load in list of 144 common plasma metabolites
+# Load in list of 141 common plasma metabolites
 met = readLines('results/met_overlap/all_plasma_overlap.txt')
 
 # Load all the plasma metabolites:
@@ -24,28 +22,24 @@ chen = read.table('results/hmdb_match/chen/coloc_results.hmdb_merge.txt', sep = 
 
 dat_list = list(metsim, schl, chen)
 
-# Load and merge the master phenostring information so I can pull out the 144
+# Load and merge the master phenostring information so I can pull out the 141
 # metabolites
 master = read.table('results/hmdb_match/master_phenostring.txt', sep = '\t', header = T, stringsAsFactors = F, quote = '')
 
 dat_list = map(dat_list, ~ left_join(.x, master, by = 'metabolite.hmdb', suffix = c('.original', '')))
 
-# Pull out the 144 plasma metabolites
+# Pull out the 141 plasma metabolites
 dat_sub = map(dat_list, ~ .x %>% filter(metabolite %in% met))
 
 # For Megan:
 # megan = map_dfr(dat_list, ~ .x %>% select(locus, SNP, metabolite)) %>% distinct
 # write.table(megan, 'results/met_overlap/met_SNP_pairs.for_megan.txt', sep = '\t', col.names = T, row.names = F, quote = F)
 
-# Group by metabolite, then count up the number of unique SNP/loci that
-# colocalised with each metabolite
-dat_count = map(dat_sub, ~ .x %>% distinct(SNP, metabolite.original) %>% group_by(metabolite.original) %>% summarise(coloc_loci = n()) %>% arrange(desc(coloc_loci)))
-
-res = map(dat_count, ~ .x %>% filter(coloc_loci >= 4) %>% pull(metabolite.original))
+res = map(dat_sub, ~ unique(.x$metabolite.original))
 
 # Pull out the HMDB metabolite name so I can pull out the study-specific
 # metabolite ID (GCST*, C*, etc.) for all the metabolites
-res_hmdb = map2(dat_sub, res, ~ .x %>% filter(metabolite.original %in% .y) %>% pull(metabolite.hmdb))
+res_hmdb = map2(dat_sub, res, ~ .x %>% filter(metabolite.original %in% .y) %>% pull(metabolite.hmdb) %>% unique)
 res_hmdb = unique(unlist(res_hmdb))
 
 # Write out the list of metabolites that had at least 4 colocalising loci with
@@ -57,9 +51,9 @@ out_names = 'results/mr_results/STUDY.mr_list.txt'
 out_names = map_chr(c('metsim', 'schl', 'chen'), ~ gsub('STUDY', .x, out_names))
 
 # NOTE: 2-hydroxybutyrate and 2-hydroxyisobutyrate are the same compound
-tmp_res = map(list(metsim, schl, chen), ~ .x %>% filter(metabolite.hmdb %in% res_hmdb) %>% pull(compound) %>% unique)
+tmp_res = map(list(metsim, schl, chen), ~ .x %>% filter(metabolite.hmdb %in% res_hmdb) %>% select(phenostring, metabolite.hmdb, compound) %>% distinct)
 
-map2(tmp_res, out_names, ~ writeLines(.x, .y))
+map2(tmp_res, out_names, ~ write.table(.x, .y, sep = '\t', col.names = T, row.names = F, quote = F))
 
 # Now save the study-specific metabolites:
 tmp_res = map2(list(metsim, schl, chen), res,  ~ .x %>% filter(metabolite %in% .y) %>% pull(compound) %>% unique)
