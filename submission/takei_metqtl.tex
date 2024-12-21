@@ -92,7 +92,7 @@
 %\newcommand{\orcidauthorB}{0000-0000-0000-000X} % Add \orcidB{} behind the author's name
 
 % Authors, for the paper (add full first names)
-\Author{Riku Takei $^{1}$\orcidA{}, Nicolas A. Sumpter$^{2}$, Megan P. Leask$^{3}$, and Tony R. Merriman$^{1,4}$*}
+\Author{Riku Takei $^{1}$\orcidA{}, Nicholas A. Sumpter$^{2}$, Megan P. Leask$^{3}$, and Tony R. Merriman$^{1,4}$*}
 
 %\longauthorlist{yes}
 
@@ -225,7 +225,7 @@ Our analysis included pathway enrichment analysis to highlight pathways that are
 
 \noindent
 \textit{Summary data and meta-analysis}\\
-Association summary statistics for 1,400 plasma and plasma metabolite ratios from the CLSA cohort \citep{chen_genomic_2023}, data from 1,391 plasma metabolites from the METSIM study \citep{yin_genome-wide_2022}, and data from 1,296 plasma and 1,399 urine metabolites from the GCKD study \citep{schlosser_genetic_2023} were downloaded from the GWAS Catalog (https://www.ebi.ac.uk/gwas/) and METSIM Metabolomics PheWeb (https://pheweb.org/metsim-metab/).
+Association summary statistics for 1,400 plasma and plasma metabolite ratios from the CLSA cohort \citep{chen_genomic_2023}, data from 1,391 plasma metabolites from the METSIM study \citep{yin_genome-wide_2022}, and data from 1,296 plasma and 1,399 urine metabolites from the GCKD study \citep{schlosser_genetic_2023} were downloaded from the GWAS Catalog (\url{https://www.ebi.ac.uk/gwas/}) and METSIM Metabolomics PheWeb (\url{https://pheweb.org/metsim-metab/}).
 Full European gout and urate GWAS summary statistics from Major et al. \citep{major_genome-wide_2024} were used in all of the analyses.
 For the purpose of Mendelian randomisation, fixed-effect meta-analysis was carried out using METAL \citep{willer_metal_2010} on the 141 metabolites that colocalized with gout genetic signals and that were also present in all three metabolite data sets.
 \\
@@ -272,6 +272,24 @@ On average, a metabolite colocalized with 1.56 gout loci in plasma, and there we
 Conversely, the average number of metabolites that colocalized with a particular gout locus was 7.12, with the largest number of metabolites (n = 178) colocalizing at the \textit{GCKR} locus (chr2:26.91MB-28.71MB).
 These results suggest that metabolites are genetically controlled by a small number of gout-associated loci while a gout genetic locus is able to influence a variety of metabolites.
 
+\begin{table}[b]
+	\begin{adjustwidth}{-\extralength}{0cm}
+		\caption{Summary of the number of metabolites and gout genetic loci colocalized with one another}
+		\label{tab:sum_coloc}
+		\begin{tabularx}{\fulllength}{CCCCCC}
+			\toprule
+			\textbf{Study} & \textbf{Total number of metabolites} & \textbf{Number of unique metabolites colocalized with gout loci}     & \textbf{Number of gout loci colocalized with metabolites} & \textbf{Average number of metabolites that colocalized with gout locus} & \textbf{Average number of loci that colocalized with a metabolite}\\
+			\midrule
+			METSIM        & 1,391 & 633 & 135 & 7.12 & 1.56 \\
+			CLSA          & 1,400 & 719 & 137 & 7.96 & 1.55 \\
+			GCKD (plasma) & 1,296 & 482 & 136 & 4.74 & 1.36 \\
+			GCKD (urine)  & 1,399 & 430 & 138 & 4.17 & 1.34 \\
+			\bottomrule
+		\end{tabularx}
+		\noindent{\footnotesize{* Note that the average number of metabolites per gout locus includes metabolites colocalized to multiple loci.}}
+	\end{adjustwidth}
+\end{table}
+
 We repeated the colocalization analysis in metabolite data sets from two independent cohorts: CLSA and GCKD (Table~\ref{tab:sum_coloc} and Supplementary tables S2-S3).
 Similar to what was observed with the METSIM cohort, 137 (49.6\%) gout loci colocalized with 719 (51.4\%) metabolites from the CLSA cohort (Table~\ref{tab:sum_coloc}; 7.96 metabolites per gout locus).
 In the GCKD cohort, the number of loci colocalized with plasma and urine metabolites were comparable to the number observed in METSIM (136 (49.3\%) and 138 (50.0\%) loci), but with less metabolites compared to the METSIM and CLSA cohorts (482 (37.2\%) plasma and 430 (30.7\%) urine metabolites; 4.74 and 4.17 metabolites per locus, respectively).
@@ -286,10 +304,26 @@ The proportions from the colocalized metabolites were similar in loci that had >
 At the \textit{ABCG2} locus, 70\% (7/10) of the metabolites that colocalized were xenobiotics, likely reflecting the role of ABCG2 as a universal transporter for a variety of drugs, metabolites, and molecules \citep{austin_doyle_multidrug_2003}, including urate (one of the colocalized metabolites at this locus and causal of gout).
 This result was not able to be compared with the CLSA and GCKD cohorts, as the category information was not available in these metabolite datasets.
 
+\begin{figure}
+	\centering
+	\begin{adjustwidth}{-\extralength}{0cm}
+		\includegraphics[width=1.4\textwidth]{"./metsim_category_prop.stacked.total.png"}
+		\caption{Proportion of broad categories for all 1,391 METSIM metabolites (left panel), 633 colocalized metabolites (middle panel), and 23 gout loci with at least ten colocalized metabolites (right panel).}
+		\label{fig:metsim_category}
+	\end{adjustwidth}
+\end{figure}
+
 \subsection{Pathway enrichment analysis of genes at loci that colocalized with metabolite levels}
 To identify plasma metabolites that were colocalized in the three data set (METSIM, CLSA, and GCKD), the metabolite names from each data sets were first mapped to standard metabolite names from the Human Metabolome Database (HMDB; Methods).
 In total, 359 (359/633 = 56.7\%), 326 (326/719 = 45.3\%), and 274 (274/482 = 56.8\%) plasma metabolites from METSIM, CLSA, and GCKD cohorts matched with an HMDB metabolite name, respectively, of which 141 (141/529 = 26.7\%) metabolites were common in all three data sets (Figure~\ref{fig:venn} and Supplementary table S6).
 Of the 141 common plasma metabolites 89 (63.1\%) did not colocalize in urine (out of 218 urine metabolites that had a HMDB metabolite name; Figure~\ref{fig:venn} and Supplementary tables S7 and S8).
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{"./plasma_metabolite_overlap_venn.bw.pdf"}
+	\includegraphics[width=0.5\textwidth]{"./plasma_urine_metabolite_overlap_venn.bw.pdf"}
+	\caption{Venn diagram showing the overlap of the colocalized plasma metabolites in METSIM, CLSA, and GCKD cohorts (left), and the overlap of 141 common metabolites with colocolised GCKD urine metabolites (right).}
+	\label{fig:venn}
+\end{figure}
 
 To determine the biological pathways represented by the colocalized metabolites, pathway enrichment analysis was carried out using the genes present in the loci that colocalized with 141 plasma metabolites that were common among all three data sets.
 Three sets of protein coding genes (1,489, 1,245, and 908 genes) were identified from the loci that colocalized with all 141 plasma, 89 plasma-specific, or 52 metabolites present in both plasma and urine, respectively (Methods).
@@ -305,6 +339,13 @@ This list of 179 genes is the most relevant set of genes that may affect the 141
 Of the 179 genes, however, only 17 at 9 gout loci encoded proteins that directly metabolizes or generates the colocalized metabolite; for example, the \textit{GLS2} (encoding glutaminase 2) was identified at the rs58310495 locus (chr12:21.27MB-21.5MB region) which colocalized with L-glutamine (Supplementary table S13).
 Pathway enrichment analysis of the 179 genes identified 71 enriched pathways (FDR-adjusted P $\le 0.05$), of which 63 were not identified in the previous analyses, though some were closely related, such as fatty acid metabolism, metabolism of carbohydrates, and transport of organic anions (Supplementary table S14).
 Among the 63 significant pathways were estrogen metabolic process, androgen biosynthetic process, steroid biosynthesis, mitochondrial fatty acid beta-oxidation, a variety of amino acid metabolic processes (including, but not limited to, glutamine, arginine, proline, valine, leucine, and isoleucine), metabolism of water-soluble vitamins and cofactors.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\textwidth]{"./ppt_image.v2.png"}
+	\caption{Schematic of the identification of metabolites directly affected by genes present in the gout loci that colocalized with metabolite levels.}
+	\label{fig:met_assoc_w_loci}
+\end{figure}
 
 \subsection{Mendelian randomization of colocalized metabolites with gout and urate}
 Lastly, two-sample Mendelian randomization (MR) analysis was carried out to evaluate causality of the plasma metabolites with gout.
@@ -322,89 +363,6 @@ However, gout also had evidence of pleiotropy with urate (MR-Egger intercept P =
 Since urate is a known causal risk factor of gout, we also tested the causality of these 28 metabolites (29 metabolites sans urate) with Major et al. \citep{major_genome-wide_2024} urate GWAS and found 24 of 28 metabolites with evidence of causality (Bonferroni-corrected P \le $1.79\times10^{-3}$; Supplementary table S17), with gamma-glutamylthreonine, glycocholenate-sulfate, N-acetylalanine, and octadecanedioate showing no evidence of causality with urate.
 There were six metabolites that showed evidence of pleiotropy (1-oleoyl-GPC, eicosanedioate, homocitrulline, mannose, myo-inositol, and perfluorooctanoate; Supplementary table S17).
 Testing for reverse causality, there was no evidence of urate having causal effect on the levels of the 28 metabolites (Supplementary table S18), thus 18 metabolites (24 urate-associating metabolites \textminus\ 6 pleiotropic metabolites) may be causal of gout via their effect on urate.
-
-% TODO:
-\begin{table}[h]
-	\hspace{-6.0em}
-	\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
-		\hline
-		& Total number of metabolites & Number of unique metabolites colocalized with gout loci & Number of gout loci colocalized with metabolites & Average number of metabolites that colocalized with gout locus\tablefootnote[1]{Note that the average number of metabolites per gout locus includes metabolites colocalized to multiple loci.} & Average number of loci that colocalized with a metabolite\\
-		% & num(met) & num(coloc) & num(loci coloc) & mean(met) & mean(loci)\\
-		\hline
-		METSIM             & 1,391 & 633 & 135 & 7.12 & 1.56 \\
-		CLSA               & 1,400 & 719 & 137 & 7.96 & 1.55 \\
-		GCKD (plasma) & 1,296 & 482 & 136 & 4.74 & 1.36 \\
-		GCKD (urine)  & 1,399 & 430 & 138 & 4.17 & 1.34 \\
-		\hline
-	\end{tabular}
-	\caption{Summary of the number of metabolites and gout genetic loci colocalized with one another}
-	\label{tab:sum_coloc}
-\end{table}
-\\
-
-\begin{figure}[t]
-	\hspace{-30pt}
-	\includegraphics[width=1.2\textwidth]{"./metsim_category_prop.stacked.total.png"}
-	\caption{Proportion of broad categories for all 1,391 METSIM metabolites (left panel), 633 colocalized metabolites (middle panel), and 23 gout loci with at least ten colocalized metabolites (right panel).}
-	\label{fig:metsim_category}
-\end{figure}
-
-\begin{figure}[h]
-	\includegraphics[width=0.5\textwidth]{"./plasma_metabolite_overlap_venn.bw.pdf"}
-	\includegraphics[width=0.5\textwidth]{"./plasma_urine_metabolite_overlap_venn.bw.pdf"}
-	\caption{Venn diagram showing the overlap of the colocalized plasma metabolites in METSIM, CLSA, and GCKD cohorts (left), and the overlap of 141 common metabolites with colocolised GCKD urine metabolites (right).}
-	\label{fig:venn}
-\end{figure}
-
-\begin{figure}[b!]
-	\centering
-	\includegraphics[width=1.0\textwidth]{"./ppt_image.v2.png"}
-	\caption{Schematic of the identification of metabolites directly affected by genes present in the gout loci that colocalized with metabolite levels.}
-	\label{fig:met_assoc_w_loci}
-\end{figure}
-All figures and tables should be cited in the main text as Figure~\ref{fig1}, Table~\ref{tab1}, etc.
-
-\begin{table}[H]
-%\tablesize{\small}
-\caption{This is a table caption. Tables should be placed in the main text near to the first time they are~cited.\label{tab1}}
-%\isPreprints{\centering}{} % Only used for preprints
-\begin{tabularx}{\textwidth}{CCC}
-\toprule
-\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
-\midrule
-Entry 1		& Data			& Data\\
-Entry 2		& Data			& Data \textsuperscript{1}\\
-\bottomrule
-\end{tabularx}
-
-\noindent{\footnotesize{\textsuperscript{1} Tables may have a footer.}}
-\end{table}
-
-\begin{table}[H]
-\caption{This is a wide table.\label{tab2}}
-%\isPreprints{\centering}{% This command is only used for ``preprints''.
-	\begin{adjustwidth}{-\extralength}{0cm}
-%} % If the paper is ``preprints'', please uncomment this parenthesis.
-%\isPreprints{\begin{tabularx}{\textwidth}{CCCC}}{% This command is only used for ``preprints''.
-		\begin{tabularx}{\fulllength}{CCCC}
-%} % If the paper is ``preprints'', please uncomment this parenthesis.
-			\toprule
-			\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}     & \textbf{Title 4}\\
-			\midrule
-\multirow[m]{3}{*}{Entry 1 *}	& Data			& Data			& Data\\
-			  	                   & Data			& Data			& Data\\
-			             	      & Data			& Data			& Data\\
-                   \midrule
-\multirow[m]{3}{*}{Entry 2}    & Data			& Data			& Data\\
-			  	                  & Data			& Data			& Data\\
-			             	     & Data			& Data			& Data\\
-			\bottomrule
-		\end{tabularx}
-%		\isPreprints{}{% This command is only used for ``preprints''.
-	\end{adjustwidth}
-%} % If the paper is ``preprints'', please uncomment this parenthesis.
-	\noindent{\footnotesize{* Tables may have a footer.}}
-\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Discussion}
@@ -509,17 +467,19 @@ These metabolites, especially those that showed causal relationship with gout, h
 %}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontributions{Conceptualization, R.T. and M.L.; methodology, R.T.; software, R.T.; validation, R.T.; formal analysis, R.T.; investigation, R.T.; resources, R.T., M.L., and T.M.; data curation, R.T.; writing---original draft preparation, R.T.; writing---review and editing, R.T., N.S., M.L., and T.M.; visualization, R.T.; supervision, T.M.; project administration, R.T. and T.M.; funding acquisition, T.M. All authors have read and agreed to the published version of the manuscript.}
+\authorcontributions{Conceptualization, all authors; methodology, R.T.; software, R.T.; validation, R.T.; formal analysis, R.T.; investigation, R.T.; resources, R.T., M.L., and T.M.; data curation, R.T.; writing---original draft preparation, R.T.; writing---review and editing, all authors; visualization, R.T.; supervision, T.M.; project administration, R.T. and T.M. All authors have read and agreed to the published version of the manuscript.}
 
-\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+\funding{This research received no external funding.}
 
-\institutionalreview{In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.}
+\institutionalreview{No Institutional Board Review was required.}
 
-\informedconsent{Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
+\informedconsent{Not applicable.}
 
-Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.}
-
-\dataavailability{We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.}
+\dataavailability{
+Association summary statistics for 1,400 plasma and plasma metabolite ratios from the CLSA cohort (GCST90199621-90201020) \citep{chen_genomic_2023} and data from 1,296 plasma and 1,399 urine metabolites from the GCKD study (GCST90264176–GCST90266872) \citep{schlosser_genetic_2023} were downloaded from the GWAS Catalog (\url{https://www.ebi.ac.uk/gwas/}). Data from 1,391 plasma metabolites from the METSIM study \citep{yin_genome-wide_2022} was downloaded from the METSIM Metabolomics PheWeb (\url{https://pheweb.org/metsim-metab/}).
+Data from the Human Metabolome Database \citep{wishart_hmdb_2022} was downloaded from \url{https://hmdb.ca/downloads} (HMDB version 5.0).
+All code used in this paper is available at \url{https://github.com/rikutakei/metqtl_code}.
+}
 
 % Only for journal Drones
 %\durcstatement{Current research is limited to the [please insert a specific academic field, e.g., XXX], which is beneficial [share benefits and/or primary use] and does not pose a threat to public health or national security. Authors acknowledge the dual-use potential of the research involving xxx and confirm that all necessary precautions have been taken to prevent potential misuse. As an ethical responsibility, authors strictly adhere to relevant national and international laws about DURC. Authors advocate for responsible deployment, ethical considerations, regulatory compliance, and transparent reporting to mitigate misuse risks and foster beneficial outcomes.}
@@ -556,6 +516,7 @@ HMDB & The Human Metabolome Database\\
 LD & Linkage Disequilibrium\\
 METSIM & Metabolic Syndrome in Men\\
 MSU & Monosodium Urate\\
+QTL & Quantitative Trait Loci\\
 \end{tabular}
 }
 
