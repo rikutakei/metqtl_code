@@ -136,7 +136,7 @@ loci_gene = read.table('src/paper_stats/loci_genes.txt', sep = '\t', header = T,
 loci_gene = loci_gene %>% select(-locus.plot)
 
 plot_metsim = left_join(plot_metsim, loci_gene, by = 'SNP')
-plot_metsim = plot_metsim %>% unite(col = 'locus.plot', chr, range, sep = ':', remove = F) %>% mutate(locus.plot = paste(SNP, ' / ', genes, ' (', locus.plot, ')', sep = '')) 
+plot_metsim = plot_metsim %>% unite(col = 'locus.plot', chr, range, sep = ':', remove = F) %>% mutate(locus.plot = paste(gsub(' /', ';', SNP), ' / ', genes, ' (', locus.plot, ')', sep = '')) %>% mutate(locus.plot = gsub('/ NA ', '', locus.plot))
 
 plot_level = plot_metsim %>% distinct(locus, locus.plot) %>% as.data.frame
 rownames(plot_level) = plot_level$locus
